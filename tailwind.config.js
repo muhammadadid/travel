@@ -9,47 +9,50 @@ module.exports = {
     extend: {
       colors: {
         gray: {
-          "100": "#fcfcfc",
-          "200": "rgba(0, 0, 0, 0.1)",
+          "100": "#fffef9",
+          "200": "#8d8d8d",
+          "300": "#808080",
+          "400": "#141b34",
         },
-        royalblue: {
-          "100": "#5c82fa",
-          "200": "#4169e1",
-        },
-        black: "#000",
         white: "#fff",
-        dimgray: "#5b5b5b",
-        silver: "#b5b5b5",
-        whitesmoke: "#eaeaea",
+        khaki: {
+          "100": "#d9ed82",
+          "200": "#bfd469",
+          "300": "rgba(191, 212, 105, 0.49)",
+          "400": "rgba(216, 236, 129, 0.49)",
+        },
+        darkgray: {
+          "100": "#adadad",
+          "200": "#ababab",
+        },
+        maroon: "#611502",
+        black: "#000",
+        dodgerblue: "#4285f4",
+        yellowgreen: "#aec742",
+        darkblue: "#000088",
       },
       spacing: {},
       fontFamily: {
-        urbanist: "Urbanist",
+        poppins: "Poppins",
       },
       borderRadius: {
-        "26xl": "45px",
+        "21xl": "40px",
+        "4xs": "9px",
         "3xs": "10px",
       },
     },
     fontSize: {
-      "5xl": "24px",
-      lgi: "19px",
-      xl: "20px",
       base: "16px",
-      "29xl": "48px",
-      "19xl": "38px",
-      "10xl": "29px",
+      sm: "14px",
+      xl: "20px",
       inherit: "inherit",
     },
     screens: {
-      mq1425: {
-        raw: "screen and (max-width: 1425px)",
+      mq750: {
+        raw: "screen and (max-width: 750px)",
       },
-      lg: {
-        max: "1200px",
-      },
-      mq825: {
-        raw: "screen and (max-width: 825px)",
+      mq675: {
+        raw: "screen and (max-width: 675px)",
       },
       mq450: {
         raw: "screen and (max-width: 450px)",
