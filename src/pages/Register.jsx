@@ -51,9 +51,7 @@ const Register = () => {
     }
   };
 
-  //   const handleFileChange = (e) => {
-  //     setFile(e.target.files[0]);
-  //   };
+  
 
   const handleUpload = async (e) => {
     const fileUrl = e.target.files[0];
@@ -85,70 +83,6 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={FormData.email}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={FormData.name}
-          onChange={handleChange}
-          required
-        />
-
-        <input onChange={handleUpload} type="file" />
-
-        <label>Phone:</label>
-        <input
-          type="tel"
-          name="phone"
-          value={FormData.phone}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Role:</label>
-        <select
-          name="role"
-          value={FormData.role}
-          onChange={handleChange}
-          required
-        >
-          <option value="member">Member</option>
-          <option value="admin">Admin</option>
-        </select>
-
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={FormData.password}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Confirm Password:</label>
-        <input
-          type="password"
-          name="passwordRepeat"
-          value={FormData.passwordRepeat}
-          onChange={handleChange}
-          required
-        />
-
-        <button onClick={handleSubmit}>Register</button>
-      </div>
       <div class="w-full relative bg-gray-100 overflow-hidden flex flex-col items-end justify-start py-0 pr-[451px] pl-0 box-border leading-[normal] tracking-[normal] text-left text-xl text-black font-poppins mq450:pr-5 mq450:box-border mq900:pr-[225px] mq900:box-border">
         <section class="self-stretch h-[1141px] flex flex-row items-start justify-start max-w-full text-left text-xl text-darkblue font-poppins">
           <div class="self-stretch w-[732px] bg-burlywood flex flex-row items-start justify-start py-[31px] px-[42px] box-border relative max-w-full">
@@ -309,7 +243,7 @@ const Register = () => {
           </form>
         </div>
       </div>
-    </div>
+    
   );
 };
 
