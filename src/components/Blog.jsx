@@ -17,7 +17,9 @@ const Blog = () => {
               class="h-[802px] flex-1 rounded-7xl max-w-full overflow-hidden object-cover min-w-[437px] mq800:min-w-full"
               loading="lazy"
               alt=""
-              src="/public/image-container-3@2x.png"
+              src="/images/blog.jpg"
+              width={437}
+              height={802}
             />
 
             <div class="flex-1 flex flex-col items-start justify-start py-5 px-0 box-border gap-[24px] min-w-[437px] max-w-full mq800:min-w-full">
@@ -35,16 +37,6 @@ const Blog = () => {
                 not know how to pursue pleasure rationally encounter
                 consequences that are extremly painful. Nor again is there
                 anyone who loves or pursues.
-              </div>
-              <div class="self-stretch flex flex-row items-center justify-start py-0 pr-[507px] pl-0 gap-[20px] text-coral-100 mq800:pr-[253px] mq800:box-border mq450:pr-5 mq450:box-border">
-                <div class="relative leading-[52px] inline-block min-w-[118px] mq450:text-lgi mq450:leading-[42px]">
-                  Read More
-                </div>
-                <img
-                  class="h-[14.7px] w-[27px] relative"
-                  alt=""
-                  src="/public/arrow-1-1.svg"
-                />
               </div>
             </div>
           </div>

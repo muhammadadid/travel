@@ -1,4 +1,34 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import FormPromo from "./FormPromo";
+
 const Promo = () => {
+  const [promo, setPromo] = useState([]);
+
+  const getPromo = async () => {
+    try {
+      const response = await axios.get(
+        "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/promos",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            apikey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pZnRhaGZhcmhhbkBnbWFpbC5jb20iLCJ1c2VySWQiOiI1Zjk2YjU4YS05MjRhLTRjOGYtOWE3Yi0wZGZlYjFmN2IwZTUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTk5MDg1NzZ9.ao6_vk2T5Ia3Ez9ezF-T9q0PKOGv7XaIvdh_guEf_os",
+          },
+        }
+      );
+      setPromo(response.data.data);
+    } catch (error) {
+      console.error(error.response);
+    }
+  };
+
+  useEffect(() => {
+    getPromo();
+  }, []);
+    
+
     return(
         <div class="flex-1 flex flex-col items-start justify-start gap-[100px] max-w-full mq800:gap-[50px] mq450:gap-[25px]">
           <div class="self-stretch flex flex-col items-start justify-start max-w-full">
@@ -36,7 +66,11 @@ const Promo = () => {
             </div>
           </div>
           <div class="self-stretch grid flex-row items-start justify-start gap-[32px] max-w-full grid-cols-[repeat(3,_minmax(328px,_1fr))] text-9xl text-slategray font-rubik mq800:gap-[16px] mq800:grid-cols-[minmax(328px,_1fr)] mq1125:justify-center mq1125:grid-cols-[repeat(2,_minmax(328px,_568px))]">
-            <div class="flex flex-col items-start justify-start max-w-full">
+           {promo.map((promo) => (
+            <FormPromo key = {promo.id} promo={promo} />
+          ))}
+           
+            {/* <div class="flex flex-col items-start justify-start max-w-full">
               <img
                 class="self-stretch h-[286px] rounded-t-7xl rounded-b-none max-w-full overflow-hidden shrink-0 object-cover"
                 loading="lazy"
@@ -239,7 +273,7 @@ const Promo = () => {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
     )

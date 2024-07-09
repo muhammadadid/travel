@@ -47,25 +47,24 @@ const Category = () => {
                 class="self-stretch w-[66px] rounded-xl max-h-full object-contain min-h-[60px]"
                 loading="lazy"
                 alt=""
-                src="/public/chevrondown-3@2x.png"
+                src="/images/kiri.png"
               />
 
               <img
                 class="self-stretch w-[66px] rounded-xl max-h-full object-contain min-h-[60px]"
                 loading="lazy"
                 alt=""
-                src="/public/chevrondown-4@2x.png"
+                src="/images/kanan.png"
               />
             </div>
           </div>
         </div>
       </div>
       <div class="w-[1376px] overflow-x-auto flex flex-row items-start justify-start pl-24 py-0 px-0 box-border gap-[32px] max-w-full text-9xl text-white mq800:gap-[16px]">
-
-      {category.map((item) => (
+        {category.map((item) => (
           <CardCategory key={item.id} item={item} />
         ))}
-        </div>
+      </div>
     </div>
   );
 };

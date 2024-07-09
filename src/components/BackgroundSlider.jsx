@@ -75,7 +75,7 @@ const BackgroundSlider = () => {
             </div>
             <div className="w-3.5 h-7 !m-[0] absolute right-[33px] bottom-[213px] flex flex-col items-start justify-start gap-[16px]">
               <img
-                className="w-full h-1.5 absolute !m-[0] top-[0px] right-[0px] left-[0px] max-w-full overflow-hidden shrink-0 "
+                className="w-100 h-3 absolute !m-[0] top-[0px] right-[0px] left-[0px] max-w-full overflow-hidden shrink-0 "
                 loading="lazy"
                 alt=""
                 src="/images/atas.png"
@@ -85,7 +85,7 @@ const BackgroundSlider = () => {
               />
 
               <img
-                className="w-full h-1.5 absolute !m-[0] right-[0px] bottom-[0px] left-[0px] max-w-full overflow-hidden shrink-0"
+                className="w-full h-3 absolute !m-[0] right-[0px] bottom-[0px] left-[0px] max-w-full overflow-hidden shrink-0"
                 loading="lazy"
                 alt=""
                 src="/images/down.png"

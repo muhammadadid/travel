@@ -1,20 +1,27 @@
 const CardCategory = ({ item }) => {
-    return (
-        <div class="overflow-x-auto flex flex-col items-start justify-start py-0 px-0 gap-6 max-w-full">
-        
-        <div class="flex bg-white rounded-xl shadow-lg">
-          <div class="relative">
-            <img class="w-350 h-400 md:h-96 object-cover rounded-t-xl" loading="lazy" alt="" src={item.imageUrl} 
-            width={340}
-            height={400}
-            />
-            <div class="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50 text-white text-center rounded-xl">
-              <h3 class="text-lg md:text-2xl font-medium">{item.name}</h3>
-            </div>
+  return (
+    <div
+      style={{ backgroundImage: `url(${item.imageUrl})` }}
+      class="w-full relative rounded-[26px] flex flex-col items-start justify-end pt-[539px] px-6 pb-10 box-border  bg-cover bg-no-repeat bg-[top] leading-[normal] tracking-[normal]"
+    >
+      <section class="self-stretch flex flex-col items-start justify-start gap-[17px] max-w-full text-left text-[28px] text-white font-playfair-display">
+        <div class="self-stretch relative font-medium mq450:text-[22px]"></div>
+        <div class="self-stretch flex flex-row items-center justify-start gap-[16px] max-w-full text-[24px] font-rubik">
+          <img
+            class="h-6 w-6 relative overflow-hidden shrink-0"
+            loading="lazy"
+            alt=""
+            src="/images/location.png"
+            width={24}
+            height={24}
+          />
+
+          <div class="flex-1 relative inline-block max-w-[calc(100%_-_40px)] mq450:text-[19px]">
+            {item.name}
           </div>
         </div>
-      </div>
-      
+      </section>
+    </div>
   );
 };
-  export default CardCategory;
+export default CardCategory;
