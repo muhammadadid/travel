@@ -1,4 +1,9 @@
+import { Router, useRouter } from "next/router"
 const FormPromo = ({ promo }) => {
+  const router = useRouter();
+  const toggleClick = () => {
+    router.push(`/promo/${promo.id}`);
+  }
   return (
     <div class="flex flex-col items-start justify-start max-w-full">
       <img
@@ -26,7 +31,9 @@ const FormPromo = ({ promo }) => {
               Rp.{promo.promo_discount_price}
             </div>
           </div>
-          <button class="cursor-pointer [border:none] py-5 px-10 bg-coral-200 rounded-xl flex flex-row items-center justify-center hover:bg-firebrick-200 bg-greenyellow">
+          <button 
+          onClick={toggleClick}
+          class="cursor-pointer [border:none] py-5 px-10 bg-coral-200 rounded-xl flex flex-row items-center justify-center hover:bg-firebrick-200 bg-greenyellow">
             <div class="relative text-xl uppercase font-rubik text-black text-left inline-block min-w-[79px] mq450:text-base">
               Details
             </div>

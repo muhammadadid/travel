@@ -3,8 +3,7 @@ import BackgroundSlider from "@/components/BackgroundSlider";
 import Blog from "@/components/Blog";
 import Category from "@/components/Category";
 import Footer from "@/components/Footer";
-
-import Promo from "@/components/Promo";
+import PromoCard from "@/components/PromoCard";
 
 
 const Home = () => {
@@ -18,7 +17,7 @@ const Home = () => {
         <Category Category={Category}/>
       </section>
       <section class="self-stretch flex flex-row items-start justify-start pt-0 px-8 pb-[156px] box-border max-w-full text-left text-45xl text-gray font-playfair-display mq800:pb-[66px] mq800:box-border mq1125:pb-[101px] mq1125:box-border">
-        <Promo />
+        <PromoCard />
       </section>
       <section class="self-stretch flex flex-row items-start justify-start pt-0 px-8 pb-[148px] box-border max-w-full text-left text-45xl text-gray font-playfair-display mq800:pb-[62px] mq800:box-border mq1350:pb-24 mq1350:box-border">
         <Blog />

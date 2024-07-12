@@ -68,13 +68,6 @@ const ListUser = () => {
                   Have a nice day
                 </div>
               </div>
-              <div className="h-[49.3px] w-[291.1px] flex flex-col items-start justify-end pt-0 px-0 pb-px box-border">
-                <img
-                  className="self-stretch flex-1 object-contain max-w-full max-h-full overflow-hidden"
-                  alt=""
-                  src="/public/profil--notification@2x.png"
-                ></img>
-              </div>
             </div>
           </div>
 
