@@ -1,6 +1,11 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 const SideBar = ({ toggleSidebar }) => {
+  const router = useRouter();
+  const handleHome =() => {
+    router.push("/");
+  }
   return (
     <div className="fixed mt-[-1px] bg-yellowgreen-200 flex flex-col items-start justify-start pt-10 pb-[451px] pr-[92px] pl-8 gap-[56px] mq450:gap-[28px] mq450:pt-5 mq450:pr-5 mq450:pb-[190px] mq450:box-border mq825:pt-[26px] mq825:pb-[293px] mq825:box-border">
       <button
@@ -37,7 +42,7 @@ const SideBar = ({ toggleSidebar }) => {
             ></img>
 
             <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[45px] text-white">
-              Banner
+              <a href="/dashboard/Banner">Banner</a>
             </div>
           </div>
           <div className="flex flex-row items-center justify-start gap-[15px]">
@@ -74,6 +79,20 @@ const SideBar = ({ toggleSidebar }) => {
 
             <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[77px]">
               Activty
+            </div>
+          </div>
+          <div 
+          onClick={handleHome}
+          className="flex flex-row items-center justify-start gap-[16px]">
+            <img
+              className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px]"
+              loading="lazy"
+              alt=""
+              src="/src/assets/icon/herarcy.png"
+            ></img>
+
+            <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[77px]">
+              Home
             </div>
           </div>
         </nav>

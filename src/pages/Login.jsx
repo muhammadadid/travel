@@ -35,7 +35,7 @@ const Login = () => {
       const token = response.data.data.token;
       localStorage.setItem("token", token);
       toast.success(response.data.message);
-      router.push("/admin/Dashboard"); // Redirect to dashboard page
+      router.push("/dashboard/ListUser"); 
     } catch (error) {
       toast.error("Error logging in");
     }

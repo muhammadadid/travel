@@ -26,10 +26,7 @@ const CardPromo = ({ item }) => {
     } catch (error) {
       console.error(error.response);
       toast.error("Failed to delete promo");
-    } finally {
-      setIsModalOpen(false);
-      setIsEditModalOpen(false);
-    }
+    } 
   };
 
   const handleEdit = () => {
