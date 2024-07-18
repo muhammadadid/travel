@@ -1,70 +1,62 @@
 import { useState } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { loginUser, fetchUserDetails } from "../pages/Redux/slice/authSlice";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { status, token } = useSelector((state) => state.auth);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/login",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            apikey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pZnRhaGZhcmhhbkBnbWFpbC5jb20iLCJ1c2VySWQiOiI1Zjk2YjU4YS05MjRhLTRjOGYtOWE3Yi0wZGZlYjFmN2IwZTUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTk5MDg1NzZ9.ao6_vk2T5Ia3Ez9ezF-T9q0PKOGv7XaIvdh_guEf_os",
-          },
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUserDetails(token)).then((action) => {
+        const user = action.payload;
+        if (user.role === "admin") {
+          router.push("/dashboard/ListUser");
+        } else {
+          router.push("/");
         }
-      );
-      console.log(response.data.data);
-      const token = response.data.data.token;
-      localStorage.setItem("token", token);
-      toast.success(response.data.message);
-      router.push("/dashboard/ListUser"); 
-    } catch (error) {
-      toast.error("Error logging in");
+      });
     }
+  }, [token, router, dispatch]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(loginUser({ email, password }));
   };
-  const toggleShowPassword = () => {
+  const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+  
 
   return (
-    
-      <div className="w-full relative bg-gray-100 overflow-hidden flex flex-col items-end justify-start py-0 pr-[461px] pl-0 box-border leading-[normal] tracking-[normal] text-left text-base text-black font-poppins mq450:pr-5 mq450:box-border mq750:pr-[230px] mq750:box-border">
-        <section className="self-stretch h-[900px] flex flex-row items-start justify-start max-w-full text-left text-xl text-darkblue font-poppins">
-          <div className="self-stretch w-[731px] bg-khaki-100 flex flex-row items-start justify-start py-[31px] px-[42px] box-border relative max-w-full">
-            <div className="h-[900px] w-[731px] relative bg-khaki-100 hidden max-w-full z-[0]"></div>
-            <Image
-              className="h-full w-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px] max-w-full overflow-hidden max-h-full object-cover z-[1]"
-              width={731}
-              height={900}
-              src="/images/background.png"
-            />
-            <Image className="[text-decoration:none] relative font-semibold text-[inherit] inline-block min-w-[100px] z-[2] mq450:text-base"
+    <div className="w-full relative bg-gray-100 overflow-hidden flex flex-col items-end justify-start py-0 pr-[461px] pl-0 box-border leading-[normal] tracking-[normal] text-left text-base text-black font-poppins mq450:pr-5 mq450:box-border mq750:pr-[230px] mq750:box-border">
+      <section className="self-stretch h-[900px] flex flex-row items-start justify-start max-w-full text-left text-xl text-darkblue font-poppins">
+        <div className="self-stretch w-[731px] bg-khaki-100 flex flex-row items-start justify-start py-[31px] px-[42px] box-border relative max-w-full">
+          <div className="h-[900px] w-[731px] relative bg-khaki-100 hidden max-w-full z-[0]"></div>
+          <Image
+            className="h-full w-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px] max-w-full overflow-hidden max-h-full object-cover z-[1]"
+            width={731}
+            height={900}
+            src="/images/background.png"
+          />
+          <Image
+            className="[text-decoration:none] relative font-semibold text-[inherit] inline-block min-w-[100px] z-[2] mq450:text-base"
             src="/images/logo.png"
             alt="Your Logo"
             width={75}
             height={75}
-            ></Image>
-          </div>
-        </section>
-        <div className="w-[539px] shadow-[0px_4px_35px_rgba(0,_0,_0,_0.08)] rounded-21xl bg-white flex flex-col items-start justify-start pt-[52px] pb-[51px] pr-[34px] pl-11 box-border gap-[32.5px] max-w-full z-[2] mt-[-821px] mq675:gap-[16px] mq675:pl-[22px] mq675:box-border mq750:pb-[33px] mq750:box-border">
+          ></Image>
+        </div>
+      </section>
+      <form className="w-[539px] h-[741px] relative z-10" onSubmit={handleSubmit}>
+        <div className=" w-[539px] shadow-[0px_4px_35px_rgba(0,_0,_0,_0.08)] rounded-21xl bg-white flex flex-col items-start justify-start pt-[52px] pb-[51px] pr-[34px] pl-11 box-border gap-[32.5px] max-w-full z-[2] mt-[-821px] mq675:gap-[16px] mq675:pl-[22px] mq675:box-border mq750:pb-[33px] mq750:box-border">
           <div className="w-[539px] h-[741px] relative shadow-[0px_4px_35px_rgba(0,_0,_0,_0.08)] rounded-21xl bg-white hidden max-w-full"></div>
           <div className="self-stretch flex flex-row items-start justify-between gap-[20px] text-xl mq450:flex-wrap">
             <div className="w-[196px] flex flex-col items-start justify-start pt-[3px] px-0 pb-0 box-border">
@@ -94,8 +86,8 @@ const Login = () => {
                 type="email"
                 name="email"
                 placeholder="Email address"
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="self-stretch flex flex-col items-start justify-start gap-[15px] max-w-full">
@@ -107,8 +99,8 @@ const Login = () => {
                     type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <Image
@@ -118,7 +110,7 @@ const Login = () => {
                   src="/images/eye.png"
                   width={22}
                   height={19}
-                  onClick={toggleShowPassword}
+                  onClick={handleShowPassword}
                 />
               </div>
               <div className="self-stretch flex flex-row items-start justify-end text-[13px] text-maroon">
@@ -128,10 +120,13 @@ const Login = () => {
               </div>
             </div>
           </div>
-          <button onClick={handleSubmit} className="cursor-pointer [border:none] py-[15px] pr-5 pl-[21px] bg-khaki-100 w-[451px] shadow-[0px_4px_19px_rgba(119,_147,_65,_0.3)] rounded-3xs flex flex-row items-start justify-center box-border whitespace-nowrap max-w-full z-[1] hover:bg-khaki-200">
+          <button
+            type="submit" disabled={status === "loading"}
+            className="cursor-pointer [border:none] py-[15px] pr-5 pl-[21px] bg-khaki-100 w-[451px] shadow-[0px_4px_19px_rgba(119,_147,_65,_0.3)] rounded-3xs flex flex-row items-start justify-center box-border whitespace-nowrap max-w-full z-[1] hover:bg-khaki-200"
+          >
             <div className="h-[54px] w-[451px] relative shadow-[0px_4px_19px_rgba(119,_147,_65,_0.3)] rounded-3xs bg-khaki-100 hidden max-w-full"></div>
             <div className="relative text-base font-medium font-poppins text-gray-400 text-left inline-block min-w-[56px] z-[1]">
-              Sign in
+              {status === "loading" ? "Loading..." : "Sign in"}
             </div>
           </button>
           <div className="flex flex-row items-start self-stretch justify-center py-0 pl-3 pr-0 text-darkgray-200">
@@ -155,33 +150,33 @@ const Login = () => {
               </button>
               <div className="flex flex-row items-start justify-start gap-[13px]">
                 <div className="flex flex-col items-start justify-start px-0 pt-px pb-0">
+                  <div className="bg-slate-200 w-[50px] h-[55px] rounded-xl">
+                    <Image
+                      className="flex items-center justify-center pt-3.5 pl-3"
+                      loading="lazy"
+                      alt=""
+                      src="/images/facebook.png"
+                      width={26}
+                      height={26}
+                    ></Image>
+                  </div>
+                </div>
                 <div className="bg-slate-200 w-[50px] h-[55px] rounded-xl">
-                  <Image
+                  <img
                     className="flex items-center justify-center pt-3.5 pl-3"
                     loading="lazy"
                     alt=""
-                    src="/images/facebook.png"
+                    src="/images/apple.png"
                     width={26}
                     height={26}
-                  ></Image>
+                  ></img>
                 </div>
-              </div>
-              <div className="bg-slate-200 w-[50px] h-[55px] rounded-xl">
-                <img
-                  className="flex items-center justify-center pt-3.5 pl-3"
-                  loading="lazy"
-                  alt=""
-                  src="/images/apple.png"
-                  width={26}
-                  height={26}
-                ></img>
-              </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    
+      </form>
+    </div>
   );
 };
 

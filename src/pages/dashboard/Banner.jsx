@@ -34,7 +34,6 @@ const Banner = () => {
   };
 
   const handleSubmit = async (e) => {
-   
     e.preventDefault();
     const payload = {
       name: formData.name,
