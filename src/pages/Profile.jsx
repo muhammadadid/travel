@@ -1,32 +1,121 @@
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserDetails, setToken } from "../pages/Redux/slice/authSlice";
+import { toast } from "react-toastify";
 import axios from "axios";
+import { useRouter } from "next/router";
 
-const profile = () => {
-  const [user, setUser] = useState({});
+const Profile = ({ item }) => {
+  const dispatch = useDispatch();
+  const { user, token } = useSelector((state) => state.auth);
+  const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [file, setFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(item?.imageUrl);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+  });
 
-  const getUser = async () => {
+  const handleUpload = async () => {
+    const uploadData = new FormData();
+    uploadData.append("image", file);
+
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+        apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
+      },
+    };
+
     try {
-      const response = await axios.get(
-        "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/user",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            apikey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+      const res = await axios.post(
+        "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/upload-image",
+        uploadData,
+        config
       );
-      setUser(response.data.data);
-      console.log(response.data.data);
+      setImageUrl(res.data.url);
+      toast.success("Image uploaded successfully!");
+      console.log(res.data.url);
     } catch (error) {
-      console.error(error.response.data);
+      toast.error("Failed to upload image!");
+      console.log(error);
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let newImageUrl = imageUrl;
+    if (file) {
+      try {
+        newImageUrl = await handleUpload();
+      } catch (error) {
+        return;
+      }
+    }
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      phoneNumber: formData.phoneNumber,
+      profilePictureUrl: imageUrl,
+    };
+    try {
+      const response = await axios.post(
+        `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/update-profile`,
+        payload,
+        {
+          headers: {
+            apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
+            Authorization: `Bearer ${(token)}`,
+          },
+        }
+      );
+      console.log(response.data);
+      toast.success('Profile updated successfully');
+      setIsModalOpen(false);
+      
+    } catch (error) {
+      console.error(error.response);
+      toast.error('Failed to update profile');
+    } 
+    router.reload();
+  };
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const openModal = () => {
+    setFormData({
+      name: user.name,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+    });
+    setImageUrl(user.profilePictureUrl);
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
-    getUser();
-  }, []);
+    const storedToken = localStorage.getItem('token');
+    if (storedToken && !token) {
+      dispatch(setToken(storedToken));
+      dispatch(fetchUserDetails(storedToken));
+    } else if (token && !user) {
+      dispatch(fetchUserDetails(token));
+    }
+  }, [dispatch, token, user]);
+
+  if (!user) {
+    return <p>You are not logged in</p>;
+  }
+
   return (
     <div>
       <Navbar />
@@ -43,7 +132,9 @@ const profile = () => {
             </div>
           </div>
           <div className="flex items-center justify-center mr-4">
-            <button className="px-4 py-2 text-white bg-blue-500 rounded-lg">
+            <button 
+              onClick={openModal}
+              className="px-4 py-2 text-white bg-blue-500 rounded-lg">
               Edit
             </button>
           </div>
@@ -59,6 +150,7 @@ const profile = () => {
               name="name"
               value={user.name}
               className="block px-4 py-2 mt-1 border rounded-md shadow-sm w-60 md:w-60 focus:ring focus:ring-opacity-50"
+              disabled
             />
           </div>
           <div>
@@ -71,6 +163,7 @@ const profile = () => {
               name="phoneNumber"
               value={user.phoneNumber}
               className="block px-4 py-2 mt-1 border rounded-md shadow-sm w-60 md:w-60 focus:ring focus:ring-opacity-50"
+              disabled
             />
           </div>
           <div>
@@ -83,6 +176,7 @@ const profile = () => {
               name="role"
               value={user.role}
               className="block px-4 py-2 mt-1 border rounded-md shadow-sm w-60 md:w-60 focus:ring focus:ring-opacity-50"
+              disabled
             />
           </div>
         </form>
@@ -100,13 +194,85 @@ const profile = () => {
             </div>
             <div>
               <p>{user.email}</p>
-              
             </div>
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="p-6 bg-white rounded-lg shadow-lg">
+            <div className="grid w-full gap-4 mt-6 md:grid-cols-1">
+              <div>
+                <label className="block text-gray-700">
+                  Profile Picture
+                </label>
+                <img src={imageUrl} alt="Profile Picture" className="w-40 h-40 rounded-full"></img>
+                <input
+                  type="file"
+                  className="block px-4 py-2 mt-1 border rounded-md shadow-sm w-60 md:w-60 focus:ring focus:ring-opacity-50"
+                  onChange={handleFileChange}
+                />
+                <button 
+                  onClick={handleUpload} 
+                  className="px-4 py-2 mt-2 text-white bg-blue-500 rounded-lg">Upload</button>
+              </div>
+              <div>
+                <label className="block text-gray-700">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  className="block px-4 py-2 mt-1 border rounded-md shadow-sm w-60 md:w-60 focus:ring focus:ring-opacity-50"
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700">
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  className="block px-4 py-2 mt-1 border rounded-md shadow-sm w-60 md:w-60 focus:ring focus:ring-opacity-50"
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  className="block px-4 py-2 mt-1 border rounded-md shadow-sm w-60 md:w-60 focus:ring focus:ring-opacity-50"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end mt-6">
+              <button 
+                onClick={() => setIsModalOpen(false)} 
+                className="px-4 py-2 mr-2 text-white bg-gray-500 rounded-lg">
+                Cancel
+              </button>
+              <button 
+                onClick={handleSubmit} 
+                className="px-4 py-2 text-white bg-blue-500 rounded-lg">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default profile;
+export default Profile;

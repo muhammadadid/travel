@@ -1,11 +1,12 @@
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {  toast } from "react-toastify";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import axios from "axios";
 
 const CardPromo = ({ item }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const router = useRouter();
+  
   const handleDelete = () => {
     try {
       const config = {
@@ -22,16 +23,14 @@ const CardPromo = ({ item }) => {
       );
       console.log(response);
       toast.success("Promo deleted successfully");
-      
     } catch (error) {
       console.error(error.response);
       toast.error("Failed to delete promo");
-    } 
+    }
   };
-
-  const handleEdit = () => {
-    setIsEditModalOpen(true);
-  };
+  const toggleClick = () => {
+    router.push(`/dashboard/promo/${item?.id}`);
+  }
 
   return (
     <div className="w-60 relative flex flex-row items-start justify-start leading-[normal] tracking-[normal]">
@@ -53,13 +52,14 @@ const CardPromo = ({ item }) => {
                   Rp.{item.promo_discount_price}
                 </b>
               </div>
-              <button 
-              onClick={() => setIsEditModalOpen(true)}
-              className="cursor-pointer [border:none] py-[5px] px-[23px] bg-[transparent] flex flex-row items-start justify-start relative whitespace-nowrap">
+              <button className="cursor-pointer [border:none] py-[5px] px-[23px] bg-[transparent] flex flex-row items-start justify-start relative whitespace-nowrap">
                 <div className="h-full w-full absolute !m-[0] top-[0px] right-[1px] bottom-[0px] left-[0px] rounded-xl bg-greenyellow mix-blend-normal"></div>
-                <b className="relative text-sm leading-[28px] inline-block font-nunito-sans text-black text-left min-w-[81px] z-[1]">
+                <a
+                 onClick={toggleClick}
+                  className="relative text-sm leading-[28px] inline-block font-nunito-sans text-black text-left min-w-[81px] z-[1]"
+                >
                   Edit Product
-                </b>
+                </a>
               </button>
             </div>
             <div className="px-2 py-2 bg-white rounded-full cursor-pointer">
@@ -102,28 +102,6 @@ const CardPromo = ({ item }) => {
                 className="px-4 py-2 text-white bg-red-500 rounded"
               >
                 Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      {isEditModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="relative z-10 p-4 bg-white rounded-lg">
-            <h2>Edit Product</h2>
-            <div className="flex justify-end mt-4">
-              <button
-                onClick={() => setIsEditModalOpen(false)}
-                className="px-4 py-2 mr-2 bg-gray-200 rounded"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleEdit}
-                className="px-4 py-2 text-white bg-red-500 rounded"
-              >
-                Edit
               </button>
             </div>
           </div>

@@ -28,30 +28,30 @@ const Category = () => {
   }, []);
 
   return (
-    <div class="flex-1 flex flex-col items-start justify-start gap-[100px] max-w-full mq800:gap-[50px] mq450:gap-[25px]">
-      <div class="self-stretch flex flex-col items-start justify-start gap-[20px] max-w-full">
-        <h1 class="m-0 w-[1172px] relative text-inherit font-normal font-inherit inline-block max-w-full mq800:text-32xl mq450:text-19xl">
+    <div className="flex-1 flex flex-col items-start justify-start gap-[100px] max-w-full mq800:gap-[50px] mq450:gap-[25px]">
+      <div className="self-stretch flex flex-col items-start justify-start gap-[20px] max-w-full">
+        <h1 className="m-0 w-[1172px] relative text-inherit font-normal font-inherit inline-block max-w-full mq800:text-32xl mq450:text-19xl">
           Popular Destinations
         </h1>
-        <div class="self-stretch flex flex-col items-start justify-start max-w-full text-5xl text-slategray font-rubik">
-          <div class="w-[368px] h-[3px] relative box-border max-w-full border-t-[3px] border-solid border-coral-100"></div>
-          <div class="self-stretch flex flex-row flex-wrap items-start justify-start gap-[32px] max-w-full mt-[-3px] mq800:gap-[16px]">
-            <div class="flex-1 flex flex-col items-start justify-start pt-8 px-0 pb-0 box-border min-w-[762px] max-w-full mq1125:min-w-full">
-              <div class="self-stretch relative mq450:text-lgi">
+        <div className="flex flex-col items-start self-stretch justify-start max-w-full text-5xl text-slategray font-rubik">
+          <div className="w-[368px] h-[3px] relative box-border max-w-full border-t-[3px] border-solid border-coral-100"></div>
+          <div className="self-stretch flex flex-row flex-wrap items-start justify-start gap-[32px] max-w-full mt-[-3px] mq800:gap-[16px]">
+            <div className="flex-1 flex flex-col items-start justify-start pt-8 px-0 pb-0 box-border min-w-[762px] max-w-full mq1125:min-w-full">
+              <div className="relative self-stretch mq450:text-lgi">
                 Most popular destinations around the world, from historical
                 places to natural wonders.
               </div>
             </div>
-            <div class="w-[172px] flex flex-row items-start justify-between gap-[20px]">
+            <div className="w-[172px] flex flex-row items-start justify-between gap-[20px]">
               <img
-                class="self-stretch w-[66px] rounded-xl max-h-full object-contain min-h-[60px]"
+                className="self-stretch w-[66px] rounded-xl max-h-full object-contain min-h-[60px]"
                 loading="lazy"
                 alt=""
                 src="/images/kiri.png"
               />
 
               <img
-                class="self-stretch w-[66px] rounded-xl max-h-full object-contain min-h-[60px]"
+                className="self-stretch w-[66px] rounded-xl max-h-full object-contain min-h-[60px]"
                 loading="lazy"
                 alt=""
                 src="/images/kanan.png"
@@ -60,7 +60,7 @@ const Category = () => {
           </div>
         </div>
       </div>
-      <div class="w-[1376px] overflow-x-auto flex flex-row items-start justify-start pl-24 py-0 px-0 box-border gap-[32px] max-w-full text-9xl text-white mq800:gap-[16px]">
+      <div className="w-[1376px] overflow-x-auto flex flex-row items-start justify-start pl-24 py-0 px-0 box-border gap-[32px] max-w-full text-9xl text-white mq800:gap-[16px]">
         {category.map((item) => (
           <CardCategory key={item.id} item={item} />
         ))}

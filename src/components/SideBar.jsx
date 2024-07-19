@@ -29,9 +29,11 @@ const SideBar = ({ toggleSidebar }) => {
               src="/src/assets/icon/dash.png"
             ></img>
 
-            <b className="relative tracking-[0.5px] leading-[150%] font-semibold inline-block min-w-[90px]">
+            <a 
+            href="/dashboard/ListUser"
+            className="relative tracking-[0.5px] leading-[150%] font-semibold inline-block min-w-[90px]">
               User
-            </b>
+            </a>
           </div>
           <div className="flex flex-row items-center justify-start gap-[16px]">
             <img
@@ -54,7 +56,7 @@ const SideBar = ({ toggleSidebar }) => {
             ></img>
 
             <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[91px]">
-              Promo
+              <a href="/dashboard/Promo">Promo</a>
             </div>
           </div>
           <div className="flex flex-row items-center justify-start gap-[15px]">
@@ -66,7 +68,7 @@ const SideBar = ({ toggleSidebar }) => {
             ></img>
 
             <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[56px]">
-              Category
+              <a href="/dashboard/Category">Category</a>
             </div>
           </div>
           <div className="flex flex-row items-center justify-start gap-[16px]">
@@ -78,12 +80,12 @@ const SideBar = ({ toggleSidebar }) => {
             ></img>
 
             <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[77px]">
-              Activty
+              <a href="/dashboard/actifity/Actifity">Actifity</a>
             </div>
           </div>
           <div 
           onClick={handleHome}
-          className="flex flex-row items-center justify-start gap-[16px]">
+          className="flex flex-row items-center justify-start gap-[16px] cursor-pointer">
             <img
               className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px]"
               loading="lazy"

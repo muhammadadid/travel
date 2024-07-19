@@ -20,7 +20,7 @@ export const loginUser = createAsyncThunk(
           apikey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
         },
       });
-      return response.data.data;
+      return response.data;
     } catch (error) {
       toast.error(error.response.data.message || 'Login failed');
       return rejectWithValue(error.response.data);
@@ -70,7 +70,7 @@ const authSlice = createSlice({
         
         const userRole = action.payload.role; // Assuming the role is returned in the response
         if (userRole === 'admin') {
-          Router.push('/dashboard/ListUser');
+          Router.push('/Dashboard/ListUser');
         } else {
           Router.push('/');
         }

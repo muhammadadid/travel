@@ -76,9 +76,9 @@ const Promo = () => {
             <h1 className="text-3xl font-bold">Promo</h1>
             <button
               className="px-4 py-2 font-semibold text-black rounded-lg shadow-md bg-greenyellow hover:bg-yellowgreen-100 focus:outline-none"
-              onClick={() => setIsModalOpen(true)}
+              
             >
-              Create Menu
+              <a href="/dashboard/CreateMenu">Create Promo</a>
             </button>
           </div>
           <div className="flex flex-wrap justify-center gap-12 mt-4">
@@ -88,147 +88,6 @@ const Promo = () => {
           </div>
         </div>
       </div>
-      {isModalOpen && (
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div class="w-full  max-w-2xl bg-white p-6 rounded-xl shadow-md h-[850x]">
-            <h2 class="text-2xl font-semibold text-center text-orange-600 mb-2 mt-2">
-              Create Promo
-            </h2>
-            <form>
-              <div class="flex mb-4">
-                <div class="w-1/2 mr-4">
-                  <label for="title" class="block text-gray-700 font-bold mb-2">
-                    Title
-                  </label>
-                  <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleChange}
-                    class="w-full p-2 border rounded"
-                    placeholder="Example: Promo Hiking Family"
-                  ></input>
-                </div>
-                <div class="w-1/2">
-                  <label for="image" class="block text-gray-700 font-bold mb-2">
-                    Image
-                  </label>
-                  <input
-                    type="file"
-                    id="image"
-                    name="imageUrl"
-                    onChange={handleFileChange}
-                    class="w-full p-2 border rounded"
-                  ></input>
-                  <button
-                    type="button"
-                    onClick={handleUpload}
-                    class="mt-2 bg-green-500 text-white py-2 px-4 rounded"
-                  >
-                    Upload Image
-                  </button>
-                </div>
-              </div>
-              <div class="mb-2">
-                <label
-                  class="block text-gray-700 font-bold mb-2"
-                >
-                  Description
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  class="w-full p-2 border rounded"
-                  value={formData.description}
-                  onChange={handleChange}
-                  placeholder="Describe the promo trip"
-                ></textarea>
-              </div>
-              <div class="mb-2">
-                <label
-            
-                  class="block text-gray-700 font-bold mb-2"
-                >
-                  Promo Code
-                </label>
-                <input
-                  type="text"
-                  id="promo_code"
-                  name="promo_code"
-                  value={formData.promo_code}
-                  onChange={handleChange}
-                  class="w-full p-2 border rounded"
-                  placeholder="Example: HIKINGFAMILY"
-                ></input>
-              </div>
-              <div class="mb-2">
-                <label
-                  
-                  class="block text-gray-700 font-bold mb-2"
-                >
-                  Minimum Claim Price
-                </label>
-                <input
-                  type="number"
-                  id="minimum_claim_price"
-                  name="minimum_claim_price"
-                  value={formData.minimum_claim_price}
-                  onChange={handleChange}
-                  class="w-full p-2 border rounded"
-                  placeholder="Example: 50000"
-                ></input>
-              </div>
-              <div class="mb-2">
-                <label  class="block text-gray-700 font-bold mb-2">
-                  Terms & Conditions
-                </label>
-                <textarea
-                  id="terms_condition"
-                  name="terms_condition"
-                  class="w-full p-2 border rounded"
-                  value={formData.terms_condition}
-                  onChange={handleChange}
-                  placeholder="Please give the terms and conditions"
-                ></textarea>
-              </div>
-              <div class="mb-2">
-                <label
-                  
-                  class="block text-gray-700 font-bold mb-2"
-                >
-                  Promo Discount Price
-                </label>
-                <input
-                  type="number"
-                  name="promo_discount_price"
-                  id="promo_discount_price"
-                  value={formData.promo_discount_price}
-                  onChange={handleChange}
-                  class="w-full p-2 border rounded"
-                  placeholder="Example: 50000"
-                ></input>
-              </div>
-              <div class="flex justify-between">
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  class="bg-orange-500 text-white py-2 px-4 rounded"
-                >
-                  Create Promo
-                </button>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  type="button"
-                  class="bg-red-500 text-white py-2 px-4 rounded"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
