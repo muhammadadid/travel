@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FromActivity from "./FormActivity";
+import { useRef } from "react";
 const Activity = () => {
   const [activity, setActivity] = useState([]);
+const scrollRef = useRef(null);
+  
   const getActivity = async () => {
     try {
       const response = await axios.get(
@@ -25,6 +28,16 @@ const Activity = () => {
   useEffect(() => {
     getActivity();
   }, []);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -300 : 300, // Adjust scroll amount as needed
+        behavior: "smooth",
+      });
+    }
+  };
+  
   return (
     <section className="self-stretch flex flex-row items-start justify-start pt-0 px-8 pb-[182.5px] box-border max-w-full text-left text-45xl text-gray font-playfair-display mq800:pb-[77px] mq800:box-border mq1125:pb-[119px] mq1125:box-border">
       <div className="flex-1 flex flex-col items-start justify-start gap-[100px] max-w-full mq800:gap-[50px] mq450:gap-[25px]">
@@ -47,6 +60,7 @@ const Activity = () => {
                   className="self-stretch w-[66px] rounded-xl max-h-full object-contain min-h-[60px]"
                   loading="lazy"
                   alt=""
+                  onClick={() => scroll("left")}
                   src="/images/kiri.png"
                 />
 
@@ -54,13 +68,16 @@ const Activity = () => {
                   className="self-stretch w-[66px] rounded-xl max-h-full object-contain min-h-[60px]"
                   loading="lazy"
                   alt=""
+                  onClick={() => scroll("right")}
                   src="/images/kanan.png"
                 />
               </div>
             </div>
           </div>
         </div>
-        <div className="w-[1376px] overflow-x-auto flex flex-row items-start justify-start py-0 px-0 box-border gap-[32px] max-w-full text-9xl text-white mq800:gap-[16px]">
+        <div 
+        ref={scrollRef}
+        className="w-[1376px] overflow-x-auto flex flex-row items-start justify-start py-0 px-0 box-border gap-[32px] max-w-full text-9xl text-white mq800:gap-[16px]">
           {activity.map((item) => (
             <FromActivity key={item.id} item={item} />
           ))}

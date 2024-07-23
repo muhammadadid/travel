@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import CardCategory from "./CardCategory";
 const Category = () => {
   const [category, setCategory] = useState([]);
+  const scrollRef = useRef();
 
   const getCategory = async () => {
     try {
@@ -27,6 +28,15 @@ const Category = () => {
     getCategory();
   }, []);
 
+  const handleScroll = (direction) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -200 : 200,
+        behavior: "smooth",
+      })
+  };
+  };
+
   return (
     <div className="flex-1 flex flex-col items-start justify-start gap-[100px] max-w-full mq800:gap-[50px] mq450:gap-[25px]">
       <div className="self-stretch flex flex-col items-start justify-start gap-[20px] max-w-full">
@@ -47,6 +57,7 @@ const Category = () => {
                 className="self-stretch w-[66px] rounded-xl max-h-full object-contain min-h-[60px]"
                 loading="lazy"
                 alt=""
+                onClick={() => handleScroll("left")}
                 src="/images/kiri.png"
               />
 
@@ -54,13 +65,16 @@ const Category = () => {
                 className="self-stretch w-[66px] rounded-xl max-h-full object-contain min-h-[60px]"
                 loading="lazy"
                 alt=""
+                onClick={() => handleScroll("right")}
                 src="/images/kanan.png"
               />
             </div>
           </div>
         </div>
       </div>
-      <div className="w-[1376px] overflow-x-auto flex flex-row items-start justify-start pl-24 py-0 px-0 box-border gap-[32px] max-w-full text-9xl text-white mq800:gap-[16px]">
+      <div 
+      ref={scrollRef}
+      className=" overflow-x-auto flex flex-row items-start justify-start pl-24 py-0 px-0 box-border gap-[32px] max-w-full  text-9xl text-white mq800:gap-[16px]">
         {category.map((item) => (
           <CardCategory key={item.id} item={item} />
         ))}

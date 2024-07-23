@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import FormPromo from "./FormPromo";
 
 const Promo = () => {
   const [promo, setPromo] = useState([]);
+  const scrollRef = useRef(null);
 
   const getPromo = async () => {
     try {
@@ -27,51 +28,65 @@ const Promo = () => {
   useEffect(() => {
     getPromo();
   }, []);
-    
 
-    return(
-        <div className="flex-1 flex flex-col items-start justify-start gap-[100px] max-w-full mq800:gap-[50px] mq450:gap-[25px]">
-          <div className="flex flex-col items-start self-stretch justify-start max-w-full">
-            <div className="self-stretch flex flex-row items-end justify-between max-w-full gap-[20px] mq800:flex-wrap">
-              <div className="w-[172px] flex flex-row items-start justify-start gap-[40px]">
-                <img
-                  className="self-stretch w-[66px] rounded-xl max-h-full overflow-hidden shrink-0 object-contain min-h-[60px]"
-                  loading="lazy"
-                  alt=""
-                  src="/public/chevrondown-5@2x.png"
-                />
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -300 : 300, // Adjust scroll amount as needed
+        behavior: "smooth",
+      });
+    }
+  };
 
-                <img
-                  className="self-stretch w-[66px] rounded-xl max-h-full overflow-hidden shrink-0 object-contain min-h-[60px]"
-                  loading="lazy"
-                  alt=""
-                  src="/public/chevrondown-6@2x.png"
-                />
-              </div>
-              <div className="w-[460px] flex flex-col items-start justify-start gap-[29px] max-w-full">
-                <div className="flex flex-row items-start self-stretch justify-end max-w-full">
-                  <div className="w-[369px] flex flex-col items-start justify-start gap-[20px] max-w-full">
-                    <h1 className="relative m-0 font-normal text-inherit font-inherit mq800:text-32xl mq450:text-19xl">
-                      Special Offer
-                    </h1>
-                    <div className="flex flex-row items-start self-stretch justify-end">
-                      <div className="h-[3px] w-[244px] relative box-border border-t-[3px] border-solid border-coral-100"></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="relative text-5xl font-rubik text-slategray mq450:text-lgi">
-                  Check out our special offer and discounts
+  return (
+    <div className="flex-1 flex flex-col items-start justify-start gap-[100px] max-w-full mq800:gap-[50px] mq450:gap-[25px]">
+      <div className="flex flex-col items-start self-stretch justify-start max-w-full">
+        <div className="self-stretch flex flex-row items-end justify-between max-w-full gap-[20px] mq800:flex-wrap">
+          <div className="w-[172px] flex flex-row items-start justify-start gap-[40px]">
+            <img
+              className="self-stretch w-[66px] rounded-xl max-h-full overflow-hidden shrink-0 object-contain min-h-[60px]"
+              loading="lazy"
+              alt=""
+              onClick={() => scroll("left")}
+              src="/images/kiri.png"
+            />
+            <img
+              className="self-stretch w-[66px] rounded-xl max-h-full overflow-hidden shrink-0 object-contain min-h-[60px]"
+              loading="lazy"
+              alt=""
+              onClick={() => scroll("right")}
+              src="/images/kanan.png"
+            />
+          </div>
+          <div className="w-[460px] flex flex-col items-end justify-end gap-[29px] max-w-full">
+            <div className="flex flex-row items-start self-stretch justify-end max-w-full">
+              <div className="w-[369px] flex flex-col items-end justify-end gap-[20px] max-w-full">
+                <h1 className="relative m-0 font-normal text-inherit font-inherit mq800:text-32xl mq450:text-19xl">
+                  Special Offer
+                </h1>
+                <div className="flex flex-row items-start self-stretch justify-end">
+                  <div className="h-[3px] w-[244px] relative box-border border-t-[3px] border-solid border-coral-100"></div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="self-stretch grid flex-row items-start justify-start gap-[32px] max-w-full grid-cols-[repeat(3,_minmax(328px,_1fr))] text-9xl text-slategray font-rubik mq800:gap-[16px] mq800:grid-cols-[minmax(328px,_1fr)] mq1125:justify-center mq1125:grid-cols-[repeat(2,_minmax(328px,_568px))]">
-           {promo.map((promo) => (
-            <FormPromo key = {promo.id} promo={promo} />
-          ))}
+            <div className="relative text-5xl font-rubik text-slategray mq450:text-lgi">
+              Check out our special offer and discounts
+            </div>
           </div>
         </div>
-    )
-}
+      </div>
+      <div className="relative flex items-center w-full">
+        <div
+          ref={scrollRef}
+          className="flex flex-row items-start justify-start py-4 space-x-4 overflow-x-auto whitespace-nowrap"
+        >
+          {promo.map((promoItem) => (
+            <FormPromo key={promoItem.id} promo={promoItem} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default Promo
+export default Promo;

@@ -69,27 +69,24 @@ const Navbar = () => {
           height={20}
         />
       </div>
-      <div className="flex items-center justify-center w-full max-w-full gap-8 md:max-w-xl">
+      <div className="flex items-center justify-center w-full max-w-full gap-8 mq450:max-w-xl ">
         <a
           href="/"
-          className="relative font-medium text-decoration-none text-inherit"
+          className="relative font-medium no-underline text-inherit"
         >
           Home
         </a>
-        <a href="#" className="relative text-decoration-none text-inherit">
-          Explore
+        <a href="/Promo" className="relative no-underline text-inherit">
+          Promo
         </a>
-        <a href="#" className="relative text-decoration-none text-inherit">
-          Travel
-        </a>
-        <a href="#" className="relative text-decoration-none text-inherit">
-          Blog
+        <a href="/Actifity" className="relative no-underline text-inherit">
+          Actifity
         </a>
         {isLoggedIn &&
-          user?.role === "admin" && ( // Conditional rendering based on user role
+          user?.role === "admin" && ( 
             <a
               href="/dashboard/ListUser"
-              className="relative text-decoration-none text-inherit"
+              className="relative no-underline text-inherit"
             >
               Dashboard
             </a>
@@ -97,8 +94,8 @@ const Navbar = () => {
       </div>
       <div className="flex items-center justify-start gap-8">
         {isLoggedIn ? (
-          <div className="relative">
-            <button
+          <div className="relative ">
+            <p
               className="flex items-center gap-2 cursor-pointer"
               onClick={handleProfileClick}
               aria-expanded={showDropdown ? "true" : "false"}
@@ -106,25 +103,24 @@ const Navbar = () => {
             >
               <img
                 className="w-10 h-10 rounded-full"
-                src={user?.profilePictureUrl} // Replace with actual user profile picture URL
+                src={user?.profilePictureUrl} 
                 alt="Profile"
                 width={20}
                 height={20}
               />
               <span className="text-sm">{user?.name}</span>{" "}
-              {/* Replace with actual user's name */}
-            </button>
+            </p>
             {showDropdown && (
-              <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg">
+              <div className="absolute right-0 mt-2 bg-white rounded-lg shadow-lg">
                 <a
                   href="/Profile"
-                  className="block px-4 py-2 text-black hover:bg-gray-200"
+                  className="block px-4 py-2 text-lg text-black no-underline rounded-lg hover:bg-gray-200"
                 >
                   Profile
                 </a>
                 <button
                   onClick={handleLogout}
-                  className="block w-full px-4 py-2 text-left text-black hover:bg-gray-200"
+                  className="block w-full px-4 py-2 text-sm text-left text-white bg-red-700 rounded-lg hover:bg-red-950"
                 >
                   Logout
                 </button>
@@ -133,11 +129,11 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <button className="text-sm text-gray-600 hover:text-gray-900 focus:outline-none">
-              <a href="/Login">Login</a>
+            <button className="bg-transparent text-lgi hover:text-gray-900">
+              <a href="/Login" className="text-white no-underline text-inherit">Login</a>
             </button>
-            <button className="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none">
-              <a href="/Register">Sign up</a>
+            <button className="px-8 py-2 rounded-md bg-greenyellow hover:bg-yellowgreen-200">
+              <a href="/Register" className="text-black no-underline ">Sign up</a>
             </button>
           </>
         )}

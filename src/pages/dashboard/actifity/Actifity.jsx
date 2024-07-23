@@ -52,7 +52,7 @@ const Actifity = () => {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid gap-4 mq1750:grid-cols-3 mq1125:grid-cols-2 mq800:grid-cols-1">
         {actifity.map((item) => (
           <ActifityCard key={item.id} item={item} />
         ))}

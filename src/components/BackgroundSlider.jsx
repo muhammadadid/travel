@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
+import { useRef } from "react";
 
 const BackgroundSlider = () => {
   const [backgrounds, setBackgrounds] = useState([]);
   const [current, setCurrent] = useState(0);
   const [error, setError] = useState(null);
+  const backgroundRef = useRef(null);
 
   useEffect(() => {
     const fetchBackgrounds = async () => {
@@ -31,17 +33,24 @@ const BackgroundSlider = () => {
     fetchBackgrounds();
   }, []);
 
-  const nextBackground = () => {
-    setCurrent((prevCurrent) => (prevCurrent + 1) % backgrounds.length);
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((current + 1) % backgrounds.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [backgrounds, current]);
+  
+  useEffect(() => {
+    if (backgroundRef.current) {
+      backgroundRef.current.classList.add("fade");
+      const timer = setTimeout(() => {
+        backgroundRef.current.classList.remove("fade");
+      }, 300);
 
-  const prevBackground = () => {
-    setCurrent(
-      (prevCurrent) =>
-        (prevCurrent - 1 + backgrounds.length) % backgrounds.length
-    );
-  };
-
+      return () => clearTimeout(timer);
+    }
+  }, [current]);
+  
   if (error) {
     return <div className="text-red-500">{error}</div>;
   }
@@ -72,27 +81,6 @@ const BackgroundSlider = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="w-3.5 h-7 !m-[0] absolute right-[33px] bottom-[213px] flex flex-col items-start justify-start gap-[16px]">
-              <img
-                className="w-100 h-3 absolute !m-[0] top-[0px] right-[0px] left-[0px] max-w-full overflow-hidden shrink-0 "
-                loading="lazy"
-                alt=""
-                src="/images/atas.png"
-                width={50}
-                height={50}
-                onClick={prevBackground}
-              />
-
-              <img
-                className="w-full h-3 absolute !m-[0] right-[0px] bottom-[0px] left-[0px] max-w-full overflow-hidden shrink-0"
-                loading="lazy"
-                alt=""
-                src="/images/down.png"
-                width={50}
-                height={50}
-                onClick={nextBackground}
-              />
             </div>
           </div>
         </div>

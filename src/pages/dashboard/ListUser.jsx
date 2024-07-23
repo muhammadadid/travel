@@ -56,7 +56,6 @@ const ListUser = () => {
           isSidebarOpen ? "max-w-[calc(100%_-_278px)]" : "max-w-full"
         } mq825:max-w-full`}
       >
-        {/* <footer className="self-stretch flex flex-col items-end justify-start gap-[110px] max-w-full text-left text-xl text-black font-body-2-regular mq675:gap-[27px]"> */}
         <div className="self-stretch flex flex-col items-end justify-start gap-[32px] max-w-full">
           <div className="w-[1380px] flex flex-row items-start justify-end py-0 px-8 box-border max-w-full bg-slate-400 rounded-xl pb-4 pt-4">
             <div className="flex-1 flex flex-row items-end justify-between py-0 pr-0 pl-px box-border max-w-full gap-[20px] mq450:flex-wrap">

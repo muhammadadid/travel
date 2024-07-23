@@ -22,7 +22,7 @@ const CreateActivity = () => {
   });
 
   useEffect(() => {
-    // Fetch categories when component mounts
+    
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
@@ -94,12 +94,12 @@ const CreateActivity = () => {
         uploadData,
         config
       );
-      console.log("Image upload response:", res.data); // Debugging line
-      setImageUrls((prevUrls) => [...prevUrls, res.data.url]); // Append the new URL to the array
+      console.log("Image upload response:", res.data); 
+      setImageUrls((prevUrls) => [...prevUrls, res.data.url]); 
       toast.success("Image uploaded successfully!");
     } catch (error) {
       toast.error("Failed to upload image!");
-      console.log("Image upload error:", error); // Debugging line
+      console.log("Image upload error:", error); 
     }
   };
 
