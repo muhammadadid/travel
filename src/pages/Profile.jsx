@@ -189,7 +189,7 @@ const Profile = ({ item }) => {
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path d="M12 12.713l11.985-9.713h-23.97l11.985 9.713zm12-8.713v13.424l-8-6.497v6.497h-8v-6.497l-8 6.497v-13.424l12 9.748 12-9.748z" />
+                <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" />
               </svg>
             </div>
             <div>
@@ -259,12 +259,12 @@ const Profile = ({ item }) => {
             <div className="flex justify-end mt-6">
               <button 
                 onClick={() => setIsModalOpen(false)} 
-                className="px-4 py-2 mr-2 text-white bg-gray-500 rounded-lg">
+                className="px-4 py-2 mr-2 text-white bg-red-500 rounded-lg">
                 Cancel
               </button>
               <button 
                 onClick={handleSubmit} 
-                className="px-4 py-2 text-white bg-blue-500 rounded-lg">
+                className="px-4 py-2 text-white bg-green-500 rounded-lg">
                 Save
               </button>
             </div>

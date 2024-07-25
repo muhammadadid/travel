@@ -4,6 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SideBar from "@/components/SideBar";
 import { useRouter } from "next/router";
+import Footer from "@/components/Footer";
+import Bar from "@/components/dashboard/Bar";
 
 const EditPromo = ({ item }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -47,7 +49,9 @@ const EditPromo = ({ item }) => {
     } catch (error) {
       toast.error("Failed to update promo!");
       console.error(error);
-    }
+    }setTimeout(() => {
+      router.push("/dashboard/Promo");
+    }, 2000);
   };
 
   const fetchPromo = async () => {
@@ -127,42 +131,14 @@ const EditPromo = ({ item }) => {
     router.push("/dashboard/Promo");
   };
   return (
-    <div className="w-full h-full relative overflow-hidden flex flex-row items-start justify-start pt-0 pb-[29.4px] pr-[18px] pl-0 box-border gap-[24px] leading-[normal] tracking-[normal] text-left text-xl text-indianred font-body-2-regular mq825:pl-6 mq825:pr-6 mq825:box-border mq450:h-auto bg-white">
-      <ToastContainer />
-      {isSidebarOpen && (
-        <div className="w-[180px] flex flex-col items-start justify-start pt-0 px-0 pb-px box-border relative mq825:hidden">
-          <SideBar toggleSidebar={toggleSidebar} />
-        </div>
-      )}
-      {!isSidebarOpen && (
-        <button
-          className="fixed z-20 p-2 text-white rounded bg-yellowgreen-200 top-10 left-4"
-          onClick={toggleSidebar}
-        >
-          <img src="/images/logo.png" alt="Open" className="w-10 h-10" />
-        </button>
-      )}
-      <div
-        className={`flex-1 flex flex-col items-start justify-start pt-[31px] px-0 pb-0 box-border ${
-          isSidebarOpen ? "max-w-[calc(100%_-_278px)]" : "max-w-full"
-        } mq825:max-w-full`}
-      >
-        <div className="self-stretch flex flex-col justify-start gap-[32px] max-w-full pl-24">
-          <div className="w-[1400px] flex flex-row items-start justify-end py-0 px-8 box-border max-w-full bg-slate-400 rounded-xl pb-4 pt-4">
-            <div className="flex-1 flex flex-row items-end justify-between py-0 pr-0 pl-px box-border max-w-full gap-[20px] mq450:flex-wrap">
-              <div className="flex flex-col items-start justify-start">
-                <b className="relative tracking-[0.15px] leading-[150%] font-semibold inline-block min-w-[121px] mq450:text-base mq450:leading-[24px]">
-                  Hello
-                </b>
-                <div className="relative text-sm tracking-[0.25px] leading-[150%] text-neutral-70 inline-block min-w-[106px] z-[1]">
-                  Have a nice day
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="max-w-4xl p-8 mx-auto bg-white rounded-lg shadow-md">
-            <h1 className="mb-8 text-3xl font-bold text-center text-orange-500">
-              Edit Promo
+    <div className="w-full h-auto relative overflow-hidden flex flex-row items-start justify-start pt-0 pb-[29.4px] pr-[18px] pl-0 box-border gap-[12px]  text-left text-xl text-indianred font-body-2-regular mq800:pl-2 mq800:pr-6 mq800:box-border mq450:h-auto bg-white">
+      <SideBar />
+      <div className="flex flex-col items-start justify-start flex-1 ">
+        <div className="self-stretch flex flex-col justify-start gap-[12px] max-w-full pl-2 pt-12">
+          <Bar />
+          <div className="w-full max-w-4xl p-8 pb-40 mx-auto bg-white rounded-lg shadow-md">
+            <h1 className="mb-8 text-3xl font-bold text-center ">
+              Edit Promo 
             </h1>
             {imageUrl && (
             <img
@@ -172,9 +148,9 @@ const EditPromo = ({ item }) => {
             />
           )}
             <div>
-              <div className="grid grid-cols-2 gap-6">
-                <div>
-                  <div className="mb-4">
+              <div className="grid grid-cols-2 gap-6 mq800:grid-cols-1">
+                <div className="pr-8 ">
+                  <div className="mb-6">
                     <label className="block mb-2 font-bold text-gray-700">
                       Title
                     </label>
@@ -187,7 +163,7 @@ const EditPromo = ({ item }) => {
                       onChange={handleChange}
                     ></input>
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <label className="block mb-2 font-bold text-gray-700">
                       Description
                     </label>
@@ -199,7 +175,7 @@ const EditPromo = ({ item }) => {
                       onChange={handleChange}
                     ></textarea>
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <label className="block mb-2 font-bold text-gray-700">
                       Promo Code
                     </label>
@@ -212,7 +188,7 @@ const EditPromo = ({ item }) => {
                       onChange={handleChange}
                     ></input>
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <label
                       className="block mb-2 font-bold text-gray-700"
                       for="min-claim-price"
@@ -228,7 +204,7 @@ const EditPromo = ({ item }) => {
                       onChange={handleChange}
                     ></input>
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <label className="block mb-2 font-bold text-gray-700">
                       Terms & Conditions
                     </label>
@@ -241,7 +217,7 @@ const EditPromo = ({ item }) => {
                       onChange={handleChange}
                     ></input>
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <label className="block mb-2 font-bold text-gray-700">
                       Promo Discount Price
                     </label>
@@ -256,7 +232,7 @@ const EditPromo = ({ item }) => {
                   </div>
                 </div>
                 <div>
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <label className="block mb-2 font-bold text-gray-700">
                       Image File
                     </label>
@@ -269,7 +245,7 @@ const EditPromo = ({ item }) => {
                       value={formData.image}
                     ></input>
                     <button
-                      className="w-full px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700 focus:outline-none focus:shadow-outline"
+                      className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                       onClick={handleUpload}
                     >
                       Upload Image
@@ -279,7 +255,7 @@ const EditPromo = ({ item }) => {
               </div>
               <div className="flex justify-between mt-8">
                 <button
-                  className="px-4 py-2 font-bold text-white bg-orange-500 rounded hover:bg-orange-700 focus:outline-none focus:shadow-outline"
+                  className="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700 focus:outline-none focus:shadow-outline"
                   onClick={handleSubmit}
                 >
                   Update Promo
@@ -293,9 +269,10 @@ const EditPromo = ({ item }) => {
               </div>
             </div>
           </div>
+          </div>
+          <Footer/>
         </div>
       </div>
-    </div>
   );
 };
 

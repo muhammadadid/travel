@@ -99,6 +99,9 @@ module.exports = {
       mq450: {
         raw: "screen and (max-width: 450px)",
       },
+      mq375: {
+        raw: "screen and (max-width: 375px)",
+      },
     },
   },
   corePlugins: {

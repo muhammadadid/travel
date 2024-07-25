@@ -74,7 +74,7 @@ const Category = () => {
       </div>
       <div 
       ref={scrollRef}
-      className=" overflow-x-auto flex flex-row items-start justify-start pl-24 py-0 px-0 box-border gap-[32px] max-w-full  text-9xl text-white mq800:gap-[16px]">
+      className=" overflow-x-scroll no-scrollbar flex flex-row items-start justify-start pl-24 py-0 px-0 box-border gap-[32px] max-w-full  text-9xl text-white mq800:gap-[16px]">
         {category.map((item) => (
           <CardCategory key={item.id} item={item} />
         ))}

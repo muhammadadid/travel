@@ -4,11 +4,14 @@ import store from '../pages/Redux/store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.css';
+import { PrimeReactProvider } from 'primereact/api';
 
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
+      <PrimeReactProvider>
       <Component {...pageProps} />
+      </PrimeReactProvider>
       <ToastContainer />
     </Provider>
   );

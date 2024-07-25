@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import SideBar from "@/components/SideBar";
+import Footer from "@/components/Footer";
+import Bar from "@/components/dashboard/Bar";
 
 const CreateActivity = () => {
+  const router = useRouter();
   const [file, setFile] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -22,7 +27,6 @@ const CreateActivity = () => {
   });
 
   useEffect(() => {
-    
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
@@ -51,7 +55,7 @@ const CreateActivity = () => {
       imageUrls: imageUrls, // Ensure this is included
     };
 
-    console.log("Payload:", payload); // Debugging line
+    console.log("Payload:", payload);
 
     const config = {
       headers: {
@@ -67,12 +71,18 @@ const CreateActivity = () => {
         payload,
         config
       );
-      console.log(response.data.data);
-      toast.success("Activity created successfully");
+      if (response.status === 200) {
+        toast.success("Activity created successfully");
+        console.log(response.data.data);
+      } else {
+        console.log(response.data.data);
+      }
     } catch (error) {
-      console.error(error.response);
-      toast.error("Failed to create activity");
+      console.log(error);
     }
+    setTimeout(() => {
+      router.push("/dashboard/actifity/Actifity");
+    }, 2000);
   };
 
   const handleUpload = async () => {
@@ -94,12 +104,12 @@ const CreateActivity = () => {
         uploadData,
         config
       );
-      console.log("Image upload response:", res.data); 
-      setImageUrls((prevUrls) => [...prevUrls, res.data.url]); 
+      console.log("Image upload response:", res.data);
+      setImageUrls((prevUrls) => [...prevUrls, res.data.url]);
       toast.success("Image uploaded successfully!");
     } catch (error) {
       toast.error("Failed to upload image!");
-      console.log("Image upload error:", error); 
+      console.log("Image upload error:", error);
     }
   };
 
@@ -112,208 +122,220 @@ const CreateActivity = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-yellow-50">
-      <div className="w-full max-w-4xl p-8 bg-white rounded shadow-md">
-        <h1 className="mb-6 text-2xl font-bold text-center text-pink-600">
-          Create Activity
-        </h1>
-        {imageUrls.map((url, index) => (
-          <img
-            key={index}
-            src={url}
-            alt="Activity Image"
-            className="object-cover w-full mx-auto mb-6 rounded shadow-md h-80"
-          />
-        ))}
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+    <div className="w-full h-auto relative overflow-hidden flex flex-row items-start justify-start pt-0 pb-[29.4px] pr-[18px] pl-0 box-border gap-[12px]  text-left text-xl text-indianred font-body-2-regular mq800:pl-2 mq800:pr-6 mq800:box-border mq450:h-auto bg-white">
+      <SideBar />
+      <div className="flex flex-col items-start justify-start flex-1 ">
+        <div className="self-stretch flex flex-col justify-start gap-[12px] max-w-full pl-2 pt-12">
+          <Bar />
+          <div className="w-full max-w-4xl p-8 pb-40 mx-auto bg-white rounded-lg shadow-md">
+            <h1 className="mb-6 text-2xl font-bold text-center ">
+              Create Activity
+            </h1>
+            {imageUrls.map((url, index) => (
+              <img
+                key={index}
+                src={url}
+                alt="Activity Image"
+                className="object-cover w-full mx-auto mb-6 rounded shadow-md h-80"
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Image Files
-              </label>
-              <input
-                type="file"
-                id="image"
-                onChange={handleFileChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              />
-              <button
-                type="button"
-                onClick={handleUpload}
-                className="inline-flex items-center px-4 py-2 mt-2 text-sm font-medium text-white bg-pink-600 rounded-md hover:bg-pink-700"
-              >
-                Upload Image
-              </button>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Category
-              </label>
-              <select
-                id="categoryId"
-                name="categoryId"
-                value={formData.categoryId}
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              >
-                <option value="">Select</option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Description
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              ></textarea>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Price
-              </label>
-              <input
-                type="number"
-                name="price"
-                value={formData.price}
-                onChange={handleOnChange}
-                id="price"
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Price Discount
-              </label>
-              <input
-                type="text"
-                name="price_discount"
-                value={formData.price_discount}
-                id="price-discount"
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Rating
-              </label>
-              <input
-                type="text"
-                id="rating"
-                name="rating"
-                value={formData.rating}
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Total Review
-              </label>
-              <input
-                type="text"
-                id="total-review"
-                name="total_reviews"
-                value={formData.total_reviews}
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Facilities
-              </label>
-              <input
-                type="text"
-                id="facilities"
-                name="facilities"
-                value={formData.facilities}
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Address
-              </label>
-              <input
-                type="text"
-                id="address"
-                name="address"
-                value={formData.address}
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Province
-              </label>
-              <input
-                type="text"
-                id="province"
-                name="province"
-                value={formData.province}
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                City
-              </label>
-              <input
-                type="text"
-                id="city"
-                name="city"
-                value={formData.city}
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Location Maps
-              </label>
-              <input
-                type="text"
-                id="location_maps"
-                name="location_maps"
-                value={formData.location_maps}
-                onChange={handleOnChange}
-                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-              />
-            </div>
+            ))}
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Image Files
+                  </label>
+                  <input
+                    type="file"
+                    id="image"
+                    onChange={handleFileChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleUpload}
+                    className="inline-flex items-center px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-700"
+                  >
+                    Upload Image
+                  </button>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Category
+                  </label>
+                  <select
+                    id="categoryId"
+                    name="categoryId"
+                    value={formData.categoryId}
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  >
+                    <option value="">Select</option>
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Description
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  ></textarea>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Price
+                  </label>
+                  <input
+                    type="number"
+                    name="price"
+                    value={formData.price}
+                    onChange={handleOnChange}
+                    id="price"
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Price Discount
+                  </label>
+                  <input
+                    type="text"
+                    name="price_discount"
+                    value={formData.price_discount}
+                    id="price-discount"
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Rating
+                  </label>
+                  <input
+                    type="text"
+                    id="rating"
+                    name="rating"
+                    value={formData.rating}
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Total Review
+                  </label>
+                  <input
+                    type="text"
+                    id="total-review"
+                    name="total_reviews"
+                    value={formData.total_reviews}
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Facilities
+                  </label>
+                  <input
+                    type="text"
+                    id="facilities"
+                    name="facilities"
+                    value={formData.facilities}
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Province
+                  </label>
+                  <input
+                    type="text"
+                    id="province"
+                    name="province"
+                    value={formData.province}
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Location Maps
+                  </label>
+                  <input
+                    type="text"
+                    id="location_maps"
+                    name="location_maps"
+                    value={formData.location_maps}
+                    onChange={handleOnChange}
+                    className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <button
+                  type="submit"
+                  className="inline-flex items-center px-4 py-2 mt-4 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-700"
+                >
+                  Create Activity
+                </button>
+                <button className="inline-flex items-center px-4 py-2 mt-4 text-sm font-medium text-white bg-red-700 rounded-md hover:bg-red-900">
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
-          <button
-            type="submit"
-            className="inline-flex items-center px-4 py-2 mt-4 text-sm font-medium text-white bg-pink-600 rounded-md hover:bg-pink-700"
-          >
-            Create Activity
-          </button>
-        </form>
+        </div>
+        <Footer />
       </div>
     </div>
   );

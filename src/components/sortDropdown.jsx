@@ -36,7 +36,7 @@ const SortDropdown = ({ onSortChange }) => {
   };
 
   return (
-    <div className="relative rounded-[20px] box-border w-56 flex flex-row items-start justify-start pt-1 pb-0.5 pr-[9px] pl-[19px] gap-[8px] leading-[normal] tracking-[normal] text-left text-sm text-neutral-color-60 font-body-14px-medium border-[1px] border-solid border-neutral-color-20">
+    <div className="relative rounded-[20px] box-border w-56 flex flex-row items-start justify-start pt-1 pb-0.5 pr-[9px] pl-[19px] gap-[8px] leading-[normal] tracking-[normal] text-left text-sm text-neutral-color-60 font-body-14px-medium border-[1px] border-solid border-neutral-color-20 mq450:w-full">
       <div className="flex flex-col items-start justify-start pt-0.5 px-0 pb-0">
         <div className="relative leading-[20px] font-medium inline-block min-w-[103px]">
           Sort By

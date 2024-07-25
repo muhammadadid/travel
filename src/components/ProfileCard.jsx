@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaEllipsisV } from "react-icons/fa";
 import axios from "axios";
 
-const ProfileCard = ({ user }) => {
+const ProfileCard = ({ user, getUser }) => {
   const [role, setRole] = useState(user.role);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,32 +28,34 @@ const ProfileCard = ({ user }) => {
           },
         }
       );
-      console.log(response.data.role);
-      setRole(response.data.role);
-      window.location.reload();
-      toast.success("Role updated successfully");
+      if(response.status === 200) {
+        toast.success("Role updated successfully");
+        setRole(response.data.role);
+        getUser();
+        setIsModalOpen(false);
+      } else {
+        toast.error("Failed to update role");
+      }
     } catch (error) {
       console.error("Error updating role:", error);
       toast.error("Failed to update role");
-    } finally {
-      setLoading(false);
-      setIsModalOpen(false);
-    }
+    } setTimeout(() => {
+      getUser();
+    },2000)
   };
 
   return (
-    <div className="flex-1 mx-2 mb-4">
-      <ToastContainer />
-      <div className="overflow-hidden rounded-lg shadow-lg w-60 bg-darkslateblue">
+    <div className="flex-1 w-full mx-2 mb-4">
+      <div className="overflow-hidden shadow-lg rounded-7xl w-60 bg-[#FFFFB3]">
         <div className="relative">
           <div className="flex items-center justify-center h-32 bg-gray-100">
             <img
-              src={user?.profilePictureUrl}
+              src={user?.profilePictureUrl || "/images/deaflut.jpg"}
               alt="Profile Picture"
-              className="object-cover w-32 h-32 rounded-full"
+              className={"object-cover w-32 h-32 rounded-full"}
             />
             <button
-              className="absolute text-gray-500 top-2 right-2 hover:text-gray-700"
+              className="absolute p-2 text-black cursor-pointer rounded-xl top-4 right-4 hover:text-slate-400"
               onClick={() => setIsModalOpen(true)}
             >
               <FaEllipsisV />
@@ -61,32 +63,32 @@ const ProfileCard = ({ user }) => {
           </div>
         </div>
         <div className="p-4">
-          <h2 className="text-lg font-semibold text-gray-500">{user?.name}</h2>
+          <h2 className="font-semibold text-lgi ">{user?.name}</h2>
           <p className="text-sm text-gray-600">
-            <span className="flex items-center">
+            <span className="flex items-center text-slate-800">
               <svg
-                className="w-5 h-5 mr-1 text-gray-400"
+                className="w-5 h-5 mr-1 text-slate-600"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path d="M21.5 3h-19C1.7 3 1 3.7 1 4.5v15c0 .8.7 1.5 1.5 1.5h19c.8 0 1.5-.7 1.5-1.5v-15c0-.8-.7-1.5-1.5-1.5zM12 16c-1.4 0-2.5-1.1-2.5-2.5S10.6 11 12 11s2.5 1.1 2.5 2.5S13.4 16 12 16zm4.5-7H7.5V6h9v3z" />
+                <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" />
               </svg>
               {user?.email}
             </span>
           </p>
           <p className="text-sm text-gray-600">
-            <span className="flex items-center">
+            <span className="flex items-center text-slate-800">
               <svg
-                className="w-5 h-5 mr-1 text-gray-400"
+                className="w-5 h-5 mr-1 text-slate-600"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path d="M21 16.5V21c0 .6-.4 1-1 1h-6c-.6 0-1-.4-1-1v-1.5c0-.8-.4-1.5-1-1.5H8c-.6 0-1 .7-1 1.5V21c0 .6-.4 1-1 1H2c-.6 0-1-.4-1-1v-4.5c0-.3.1-.6.3-.8l7-7c.4-.4 1-.4 1.4 0l7 7c.2.2.3.5.3.8z" />
+                <path d="M16.434.001a.826.826 0 00-.164.008l-3.423.543a2.635 2.635 0 01-2.189 3.01 2.629 2.629 0 01-3.01-2.185l-3.417.538a.818.818 0 00-.677.931l3.24 20.467a.818.818 0 00.931.677l3.423-.543a2.635 2.635 0 012.189-3.01 2.629 2.629 0 013.01 2.185l3.422-.543a.818.818 0 00.677-.93L17.2.685a.816.816 0 00-.767-.685zm-3.22 6.534c.066 0 .128.005.185.017.423.09.975.6 1.315.955.178.187.192.519.048.73l-1.228 1.795a.89.89 0 01-.437.283c-.504.125-1.248-.95-1.771 1.507-.524 2.458.59 1.776 1.003 2.098a.828.828 0 01.283.437l.394 2.14a.613.613 0 01-.341.649c-.456.182-1.167.427-1.589.336-.907-.192-2.342-2.4-1.57-6.044.725-3.415 2.71-4.89 3.708-4.903Z" />
               </svg>
               {user?.phoneNumber}
             </span>
           </p>
-          <button className="w-full py-2 mt-4 text-sm font-semibold text-white bg-orange-500 rounded-md">
+          <button className={`w-full py-2 mt-4 text-sm font-semibold rounded-81xl text-white ${role === "user" ? "bg-yellowgreen-100" : "bg-darkblue"}`}>
             {user?.role}
           </button>
         </div>

@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="self-stretch bg-gray flex flex-row items-end justify-start py-[140px] px-8 box-border min-h-[577px] max-w-full mt-[-115px] text-left text-5xl text-white font-rubik mq800:pt-[140px] mq800:pb-[91px] mq800:box-border bg-gray-400">
+    <footer className="self-stretch bg-gray flex flex-row items-end justify-start py-[140px] px-8 box-border h-auto w-full mt-[-115px] text-left text-5xl text-white font-rubik mq800:pt-[140px] mq800:pb-[91px] mq800:box-border bg-gray-400">
       <div className="flex-1 flex flex-row items-start justify-between max-w-full gap-[20px] mq1125:flex-wrap mq1125:justify-center">
         <div className="flex flex-col items-start justify-start gap-[16px] text-[14px]">
           <div className="flex flex-row items-start justify-start">

@@ -1,96 +1,105 @@
-import React from "react";
-import { useRouter } from "next/router";
+import React, { useState } from 'react';
+import { Sidebar } from 'primereact/sidebar';
+import { Button } from 'primereact/button';
+import { useRouter } from 'next/router';
+import 'primereact/resources/themes/saga-blue/theme.css';  // Change theme as needed
+import 'primereact/resources/primereact.min.css';
 
-const SideBar = ({ toggleSidebar }) => {
+
+const SideBar = () => {
+  const [visible, setVisible] = useState(false);
   const router = useRouter();
   const handleHome =() => {
     router.push("/");
   }
   return (
-    <div className="fixed mt-[-1px] bg-yellowgreen-200 flex flex-col items-start justify-start pt-10 pb-[451px] pr-[92px] pl-8 gap-[56px] mq450:gap-[28px] mq450:pt-5 mq450:pr-5 mq450:pb-[190px] mq450:box-border mq825:pt-[26px] mq825:pb-[293px] mq825:box-border">
-      <button
-        className="absolute z-20 bg-yellowgreen-200 top-4 right-4"
-        onClick={toggleSidebar}
-      >
-        <img src="/images/logo.png" alt="Close" className="w-12 h-12" />
-      </button>
-      <div className="flex flex-row items-center justify-start">
-        <b className="relative tracking-[0.15px] leading-[150%] font-bold inline-block min-w-[116px] mq450:text-base mq450:leading-[24px]">
+    <div className="flex card justify-content-center">
+    <Sidebar className='bg-khaki-100 bg-opacity-90 w-60' visible={visible} onHide={() => setVisible(false)}>
+    <div className="flex flex-row items-center justify-start mb-12 ml-4">
+        <b className="relative text-3xl  font-bold inline-block min-w-[116px] mq450:text-base mq450:leading-[24px]">
           Infinity Travel
         </b>
       </div>
-      <div className="flex flex-col items-start justify-start gap-[64px] text-base text-white">
-        <nav className="m-0 flex flex-col items-start justify-start gap-[40px] text-left text-base text-white font-body-1-regular">
-          <div className="flex flex-row items-center justify-start gap-[15px] text-white">
+      <div className="flex flex-col items-start justify-start gap-[64px] text-base ml-4">
+        <nav className="m-0 flex flex-col items-start justify-start gap-[32px] text-left text-base text-white font-body-1-regular">
+          <div className="flex flex-row items-center justify-start gap-[16px]  hover:bg-greenyellow w-32 p-2 rounded-xl">
             <img
               className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px]"
               loading="lazy"
               alt=""
-              src="/src/assets/icon/dash.png"
+              src="/images/userprofile.png"
             ></img>
 
             <a 
             href="/dashboard/ListUser"
-            className="relative tracking-[0.5px] leading-[150%] font-semibold inline-block min-w-[90px]">
+            className="relative no-underline text-white font-semibold inline-block min-w-[90px]">
               User
             </a>
           </div>
-          <div className="flex flex-row items-center justify-start gap-[16px]">
+          <div className="flex flex-row items-center justify-start gap-[16px] hover:bg-greenyellow w-32 p-2 rounded-xl">
             <img
               className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px]"
               loading="lazy"
               alt=""
-              src="/src/assets/icon/user.png"
+              src="/images/image.png"
             ></img>
 
-            <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[45px] text-white">
-              <a href="/dashboard/Banner">Banner</a>
+            <div className="relative  inline-block min-w-[45px] ">
+              <a
+              className='font-semibold text-white no-underline'
+              href="/dashboard/Banner">Banner</a>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-start gap-[15px]">
+          <div className="flex flex-row items-center justify-start gap-[15px] hover:bg-greenyellow w-32 p-2 rounded-xl">
             <img
               className="h-6 w-6 relative min-h-[24px]"
               loading="lazy"
               alt=""
-              src="/src/assets/icon/document.png"
+              src="/images/discount.png"
             ></img>
 
             <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[91px]">
-              <a href="/dashboard/Promo">Promo</a>
+              <a 
+              className='font-semibold text-white no-underline'
+              href="/dashboard/Promo">Promo</a>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-start gap-[15px]">
+          <div className="flex flex-row items-center justify-start gap-[15px] hover:bg-greenyellow w-32 p-2 rounded-xl">
             <img
               className="h-6 w-6 relative min-h-[24px]"
               loading="lazy"
               alt=""
-              src="/src/assets/icon/gallery.png"
+              src="/images/Taggroup.png"
             ></img>
 
             <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[56px]">
-              <a href="/dashboard/Category">Category</a>
+              <a 
+              className='font-semibold text-white no-underline'
+              href="/dashboard/Category">Category</a>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-start gap-[16px]">
+          <div className="flex flex-row items-center justify-start gap-[16px] hover:bg-greenyellow w-32 p-2 rounded-xl">
             <img
               className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px]"
               loading="lazy"
               alt=""
-              src="/src/assets/icon/herarcy.png"
+              src="/images/ticketflight.png"
             ></img>
 
             <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[77px]">
-              <a href="/dashboard/actifity/Actifity">Actifity</a>
+              <a 
+              className='font-semibold text-white no-underline'
+              href="/dashboard/actifity/Actifity">Actifity</a>
             </div>
           </div>
           <div 
           onClick={handleHome}
-          className="flex flex-row items-center justify-start gap-[16px] cursor-pointer">
+          className="flex flex-row items-center justify-start gap-[16px] cursor-pointer hover:bg-greenyellow w-32 p-2 rounded-xl">
             <img
               className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px]"
               loading="lazy"
               alt=""
-              src="/src/assets/icon/herarcy.png"
+              src="/images/home.png"
             ></img>
 
             <div className="relative tracking-[0.5px] leading-[150%] inline-block min-w-[77px]">
@@ -99,7 +108,11 @@ const SideBar = ({ toggleSidebar }) => {
           </div>
         </nav>
       </div>
-    </div>
+    </Sidebar>
+    <Button className='fixed z-10 rounded-tr-xl rounded-br-xl bg-opacity-40 mt-28 bg-khaki-200'  onClick={() => setVisible(true)}>
+      <img src="/images/logo.png" alt="logo" className='w-8 h-8 mq450:' />
+      </Button> 
+</div>
   );
 };
 

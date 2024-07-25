@@ -77,7 +77,7 @@ const scrollRef = useRef(null);
         </div>
         <div 
         ref={scrollRef}
-        className="w-[1376px] overflow-x-auto flex flex-row items-start justify-start py-0 px-0 box-border gap-[32px] max-w-full text-9xl text-white mq800:gap-[16px]">
+        className="w-[1376px]  overflow-x-scroll no-scrollbar flex flex-row items-start justify-start py-0 px-0 box-border gap-[32px] max-w-full text-9xl text-white mq800:gap-[16px]">
           {activity.map((item) => (
             <FromActivity key={item.id} item={item} />
           ))}

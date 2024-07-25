@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BannerCard from "@/components/dashboard/BannerCard";
 import { toast } from "react-toastify";
+import SideBar from "@/components/SideBar";
+import Footer from "@/components/Footer";
+import { get } from "react-hook-form";
+import Bar from "@/components/dashboard/Bar";
 
 const Banner = () => {
   const [banners, setBanners] = useState([]);
@@ -11,7 +15,7 @@ const Banner = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [formData, setFormData] = useState({
     name: "",
-  })
+  });
 
   const getBanners = async () => {
     try {
@@ -38,10 +42,11 @@ const Banner = () => {
     const payload = {
       name: formData.name,
       imageUrl: imageUrl,
-    }
+    };
     try {
       const response = await axios.post(
-        "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/create-banner", payload,
+        "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/create-banner",
+        payload,
         {
           headers: {
             "Content-Type": "application/json",
@@ -50,13 +55,20 @@ const Banner = () => {
               "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pZnRhaGZhcmhhbkBnbWFpbC5jb20iLCJ1c2VySWQiOiI1Zjk2YjU4YS05MjRhLTRjOGYtOWE3Yi0wZGZlYjFmN2IwZTUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTk5MDg1NzZ9.ao6_vk2T5Ia3Ez9ezF-T9q0PKOGv7XaIvdh_guEf_os",
           },
         }
-      ); 
-      console.log(response.data.data);
-      toast.success('Banner created successfully');
+      );
+      if(response.status === 200) {
+        toast.success("Banner created successfully");
+        getBanners();
+        setIsModalOpen(false);
+      } else {
+        toast.error("Failed to create banner");
+      }
     } catch (error) {
       console.error(error.response);
-      toast.error('Failed to create banner');
-    }
+      toast.error("Failed to create banner");
+    }setTimeout(() => {
+      getBanners();
+    }, 2000);
   };
 
   const handleUpload = async () => {
@@ -89,7 +101,7 @@ const Banner = () => {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-  
+
   useEffect(() => {
     getBanners();
   }, []);
@@ -100,93 +112,98 @@ const Banner = () => {
   );
 
   return (
-    <div className="container py-8 mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Banners</h1>
-        <button 
-        onClick={() => setIsModalOpen(true)}
-        className="px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-700">
-          + New Banner
-        </button>
-      </div>
-      <div className="flex items-center justify-between mb-6">
-        <span className="text-gray-600">
-          {filteredBanners.length} banners found
-        </span>
-        <input
-          type="text"
-          placeholder="Search User"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="px-4 py-2 border rounded"
-        />
-      </div>
-      <div className="grid grid-cols-1 gap-6 mq1750:grid-cols-3 mq800:grid-cols-1 mq1125:grid-cols-2">
-        {filteredBanners.length > 0 ? (
-          filteredBanners.map((item) => (
-            <BannerCard key={item.id} item={item} />
-          ))
-        ) : (
-          <p className="text-center text-gray-700 col-span-full">
-            No banners found
-          </p>
-        )}
-      </div>
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-        <div className="relative w-full max-w-md p-6 bg-white rounded-lg">
-          <button
-            onClick={() => setIsModalOpen(false)}
-            className="absolute text-gray-600 top-2 right-2"
-          >
-            &times;
+    <div className="w-full h-full relative overflow-hidden flex flex-row items-start justify-start  pb-[29.4px] pr-[18px]  box-border gap-[12px] text-left text-xl text-indianred  mq450:h-auto ">
+      <SideBar  />
+      <div className=" flex flex-col justify-start gap-[32px] w-full pt-10 h-full ">
+        <Bar/>
+        <div className="flex flex-row items-center justify-between flex-shrink-0 p-2 mx-6 border-b-2 border-l-2 border-solid rounded-2xl mq450:flex-col mq450:items-start mq450:ml-2">
+          <h1 className="text-3xl font-bold">Banner</h1>
+          <button className="px-4 py-2 font-semibold text-black rounded-lg shadow-md bg-greenyellow hover:bg-yellowgreen-100 focus:outline-none">
+            <a className="no-underline" onClick={() => setIsModalOpen(true)}>
+              Create Banner
+            </a>
           </button>
-          <h2 className="mb-4 text-xl font-bold">Add Banner</h2>
-          {imageUrl && (
-            <img
-              src={imageUrl}
-              alt="Uploaded Banner"
-              className="object-cover w-full h-48 mb-4 rounded"
-            />
+        </div>
+        <div className="flex flex-row items-center justify-between mx-6 mq450:flex-col mq450:items-start mq450:ml-2">
+          <input
+            type="text"
+            placeholder="Search Banner"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="px-4 py-2 border rounded-lg focus:outline-none"
+          />
+        </div>
+        <div className="flex flex-wrap justify-center gap-6 mt-4 mb-28 mq450:gap-6">
+            {filteredBanners.length > 0 ? (
+              filteredBanners.map((item) => (
+                <BannerCard key={item.id} item={item} getBanners={getBanners} />
+              ))
+            ) : (
+              <p className="text-center text-gray-700 col-span-full">
+                No banners found
+              </p>
+            )}
+          </div>
+          {isModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+              <div className="relative w-full max-w-md p-6 bg-white rounded-lg">
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="absolute text-gray-600 top-2 right-2"
+                >
+                  &times;
+                </button>
+                <h2 className="mb-4 text-xl font-bold text-center">
+                  Add Banner
+                </h2>
+                {imageUrl && (
+                  <img
+                    src={imageUrl}
+                    alt="Uploaded Banner"
+                    className="object-cover w-full h-48 mb-4 rounded"
+                  />
+                )}
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <label className="block text-gray-700">Choose Banner</label>
+                    <input
+                      type="file"
+                      onChange={handleFileChange}
+                      className="w-full p-2 mt-2 border rounded"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleUpload}
+                      className="px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+                    >
+                      Upload
+                    </button>
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-gray-700">Banner Name</label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      className="w-full p-2 mt-2 border rounded"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"
+                  >
+                    Save
+                  </button>
+                </form>
+              </div>
+            </div>
           )}
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label className="block text-gray-700">Choose Banner</label>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                className="w-full p-2 mt-2 border rounded"
-              />
-              <button
-                type="button"
-                onClick={handleUpload}
-                className="px-4 py-2 mt-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
-              >
-                Upload
-              </button>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Banner Name</label>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                className="w-full p-2 mt-2 border rounded"
-              />
-            </div>
-            <button
-              type="submit"
-              className="px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-700"
-            >
-              Save
-            </button>
-          </form>
+        <Footer />
         </div>
       </div>
-      )}
-    </div>
+    
   );
 };
 

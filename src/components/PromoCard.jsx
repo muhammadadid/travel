@@ -78,7 +78,7 @@ const Promo = () => {
       <div className="relative flex items-center w-full">
         <div
           ref={scrollRef}
-          className="flex flex-row items-start justify-start py-4 space-x-4 overflow-x-auto whitespace-nowrap"
+          className="flex flex-row items-start justify-start py-4 space-x-4 overflow-x-scroll no-scrollbar whitespace-nowrap"
         >
           {promo.map((promoItem) => (
             <FormPromo key={promoItem.id} promo={promoItem} />
