@@ -4,7 +4,6 @@ import CategoryCard from "@/components/dashboard/CategoryCard";
 import { toast } from "react-toastify";
 import Footer from "@/components/Footer";
 import SideBar from "@/components/SideBar";
-import { get } from "react-hook-form";
 import Bar from "@/components/dashboard/Bar";
 
 const Category = () => {

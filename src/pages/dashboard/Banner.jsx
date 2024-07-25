@@ -4,7 +4,6 @@ import BannerCard from "@/components/dashboard/BannerCard";
 import { toast } from "react-toastify";
 import SideBar from "@/components/SideBar";
 import Footer from "@/components/Footer";
-import { get } from "react-hook-form";
 import Bar from "@/components/dashboard/Bar";
 
 const Banner = () => {
