@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEllipsisV } from "react-icons/fa";
 import axios from "axios";
@@ -95,8 +95,8 @@ const ProfileCard = ({ user, getUser }) => {
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50 ">
+          <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg mq450:w-1/2">
             <h2 className="mb-4 text-lg font-medium">Change Role</h2>
             <select
               value={role}
@@ -115,7 +115,7 @@ const ProfileCard = ({ user, getUser }) => {
             </button>
             <button
               onClick={() => setIsModalOpen(false)}
-              className="w-full py-2 mt-4 text-sm font-semibold text-white bg-gray-500 rounded-md"
+              className="w-full py-2 mt-4 text-sm font-semibold text-white bg-red-500 rounded-md"
             >
               Close
             </button>

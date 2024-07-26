@@ -20,7 +20,7 @@ const Navbar = () => {
         {
           headers: {
             apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${(token)}`,
           },
         }
       );
@@ -57,6 +57,7 @@ const Navbar = () => {
     }
   }, []);
 
+ 
   return (
     <div className="box-border fixed top-0 left-0 flex items-center justify-between w-full max-w-full gap-20 p-2 text-xl bg-white bg-opacity-40 z-1 font-rubik backdrop-blur-lg">
       <div className="flex items-start justify-start">

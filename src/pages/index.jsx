@@ -3,7 +3,7 @@ import BackgroundSlider from "@/components/BackgroundSlider";
 import Blog from "@/components/Blog";
 import Category from "@/components/Category";
 import Footer from "@/components/Footer";
-import PromoCard from "@/components/PromoCard";
+import PromoCard from "@/components/PromoCard"; 
 
 
 const Home = () => {

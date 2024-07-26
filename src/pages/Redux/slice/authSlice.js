@@ -67,6 +67,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         localStorage.setItem('token', action.payload.token);
         toast.success('Login successful');
+        // dispatch(fetchUserDetails(action.payload.token));
         
         const userRole = action.payload.role; // Assuming the role is returned in the response
         if (userRole === 'admin') {
@@ -81,6 +82,7 @@ const authSlice = createSlice({
       })
       .addCase(fetchUserDetails.fulfilled, (state, action) => {
         state.user = action.payload;
+         // Assuming the role is returned in the response
       })
   },
 });
@@ -88,3 +90,4 @@ const authSlice = createSlice({
 export const { setToken } = authSlice.actions;
 
 export default authSlice.reducer;
+

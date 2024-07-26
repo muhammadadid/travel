@@ -123,7 +123,7 @@ const Profile = ({ item }) => {
         <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
           <div className="flex items-center justify-center space-x-4">
             <img
-              src={user.profilePictureUrl}
+              src={user?.profilePictureUrl}
               alt="Profile Picture"
               className="w-40 h-40 rounded-full"
             />

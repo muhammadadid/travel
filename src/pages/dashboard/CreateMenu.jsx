@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SideBar from "@/components/SideBar";
 import Footer from "@/components/Footer";
@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import Bar from "@/components/dashboard/Bar";
 
 const CreateMenu = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [file, setFile] = useState();
   const [imageUrl, setImageUrl] = useState("");
   const [formData, setFormData] = useState({
@@ -20,9 +19,8 @@ const CreateMenu = () => {
     promo_discount_price: "",
   });
 
+  const router = useRouter();
 
-    const router = useRouter();
-    
   const handleSubmit = async () => {
     const payload = {
       title: formData.title,
@@ -50,11 +48,12 @@ const CreateMenu = () => {
 
       toast.success("Promo created successfully!");
       console.log(response.data.data);
-      
+      setImageUrl("");
     } catch (error) {
       toast.error("Failed to create promo!");
       console.error(error.response);
-    }setTimeout(() => {
+    }
+    setTimeout(() => {
       router.push("/dashboard/Promo");
     }, 2000);
   };
@@ -95,156 +94,156 @@ const CreateMenu = () => {
   };
   const handleCancel = () => {
     router.push("/dashboard/Promo");
-  }
+  };
 
   return (
-    <div className="w-full h-auto relative overflow-hidden flex flex-row items-start justify-start pt-0 pb-[29.4px] pr-[18px] pl-0 box-border gap-[12px]  text-left text-xl text-indianred font-body-2-regular mq800:pl-2 mq800:pr-6 mq800:box-border mq450:h-auto bg-white">
-      <SideBar />
-      <div className="flex flex-col items-start justify-start flex-1 ">
-        <div className="self-stretch flex flex-col justify-start gap-[12px] max-w-full pl-2 pt-12">
-          <Bar />
-          <div className="inset-0 flex items-center justify-center mb-40 -z-1">
-            <div className="w-full max-w-2xl bg-white p-6 rounded-xl shadow-md h-[850x]">
-              <h2 className="mt-2 mb-4 text-2xl font-semibold text-center ">
-                Create Promo
-              </h2>
-                  {imageUrl && (
-                    <div className="mt-4">
-                      <img src={imageUrl} alt="Uploaded" className="w-full mt-2 mb-8 h-60" />
-                    </div>
-                  )}
-              <form>
-                <div className="flex mb-4 mq450:flex-1">
-                  <div className="w-1/2 mr-4">
-                    <label
-                      htmlFor="title"
-                      className="block mb-2 font-bold text-gray-700"
+    <div className="w-full h-full">
+      <div className="w-full h-full relative overflow-hidden flex flex-row items-start justify-start pt-0 pb-[29.4px] pr-[18px] pl-0 box-border gap-[12px]  text-left text-xl text-indianred font-body-2-regular mq800:pl-2 mq800:pr-6 mq800:box-border mq450:h-auto bg-white">
+        <SideBar />
+        <div className="flex flex-col items-start justify-start flex-1 ">
+          <div className="self-stretch flex flex-col justify-start gap-[12px] max-w-full pl-2 pt-12">
+            <Bar />
+            <div className="inset-0 flex items-center justify-center -z-1">
+              <div className="w-full h-auto max-w-2xl p-6 bg-white shadow-md rounded-xl">
+                <h2 className="mt-2 mb-4 text-2xl font-semibold text-center ">
+                  Create Promo
+                </h2>
+                {imageUrl && (
+                  <div className="mt-4">
+                    <img
+                      src={imageUrl}
+                      alt="Uploaded"
+                      className="w-full mt-2 mb-8 h-60"
+                    />
+                  </div>
+                )}
+                <form>
+                  <div className="flex mb-4 mq450:flex-1">
+                    <div className="w-1/2 mr-4">
+                      <label
+                        htmlFor="title"
+                        className="block mb-2 font-bold text-gray-700"
                       >
-                      Title
+                        Title
+                      </label>
+                      <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        onChange={handleChange}
+                        className="w-full p-2 border rounded"
+                        placeholder="Example: Promo Hiking Family"
+                      />
+                    </div>
+                    <div className="w-1/2">
+                      <label
+                        htmlFor="image"
+                        className="block mb-2 font-bold text-gray-700"
+                      >
+                        Image
+                      </label>
+                      <input
+                        type="file"
+                        id="image"
+                        name="imageUrl"
+                        onChange={handleFileChange}
+                        className="w-full p-2 border rounded"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleUpload}
+                        className="px-4 py-2 mt-2 text-white bg-blue-500 rounded hover:bg-blue-700"
+                      >
+                        Upload Image
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mb-2">
+                    <label className="block mb-2 font-bold text-gray-700">
+                      Description
+                    </label>
+                    <textarea
+                      id="description"
+                      name="description"
+                      className="w-full p-2 border rounded"
+                      onChange={handleChange}
+                      placeholder="Describe the promo trip"
+                    ></textarea>
+                  </div>
+                  <div className="mb-2">
+                    <label className="block mb-2 font-bold text-gray-700">
+                      Promo Code
                     </label>
                     <input
                       type="text"
-                      id="title"
-                      name="title"
-                      value={formData.title}
+                      id="promo_code"
+                      name="promo_code"
                       onChange={handleChange}
                       className="w-full p-2 border rounded"
-                      placeholder="Example: Promo Hiking Family"
+                      placeholder="Example: HIKINGFAMILY"
                     />
                   </div>
-                  <div className="w-1/2">
-                    <label
-                      htmlFor="image"
-                      className="block mb-2 font-bold text-gray-700"
-                    >
-                      Image
+                  <div className="mb-2">
+                    <label className="block mb-2 font-bold text-gray-700">
+                      Minimum Claim Price
                     </label>
                     <input
-                      type="file"
-                      id="image"
-                      name="imageUrl"
-                      onChange={handleFileChange}
+                      type="number"
+                      id="minimum_claim_price"
+                      name="minimum_claim_price"
+                      onChange={handleChange}
                       className="w-full p-2 border rounded"
+                      placeholder="Example: 50000"
                     />
+                  </div>
+                  <div className="mb-2">
+                    <label className="block mb-2 font-bold text-gray-700">
+                      Terms & Conditions
+                    </label>
+                    <textarea
+                      id="terms_condition"
+                      name="terms_condition"
+                      className="w-full p-2 border rounded"
+                      onChange={handleChange}
+                      placeholder="Please give the terms and conditions"
+                    ></textarea>
+                  </div>
+                  <div className="mb-2">
+                    <label className="block mb-2 font-bold text-gray-700">
+                      Promo Discount Price
+                    </label>
+                    <input
+                      type="number"
+                      name="promo_discount_price"
+                      id="promo_discount_price"
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded"
+                      placeholder="Example: 50000"
+                    />
+                  </div>
+                  <div className="flex justify-between mt-6">
                     <button
                       type="button"
-                      onClick={handleUpload}
-                      className="px-4 py-2 mt-2 text-white bg-blue-500 rounded hover:bg-blue-700"
+                      onClick={handleSubmit}
+                      className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-700"
                     >
-                      Upload Image
+                      Create Promo
+                    </button>
+                    <button
+                      onClick={handleCancel}
+                      type="button"
+                      className="px-4 py-2 text-white bg-red-500 rounded"
+                    >
+                      Cancel
                     </button>
                   </div>
-                </div>
-                <div className="mb-2">
-                  <label className="block mb-2 font-bold text-gray-700">
-                    Description
-                  </label>
-                  <textarea
-                    id="description"
-                    name="description"
-                    className="w-full p-2 border rounded"
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="Describe the promo trip"
-                  ></textarea>
-                </div>
-                <div className="mb-2">
-                  <label className="block mb-2 font-bold text-gray-700">
-                    Promo Code
-                  </label>
-                  <input
-                    type="text"
-                    id="promo_code"
-                    name="promo_code"
-                    value={formData.promo_code}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded"
-                    placeholder="Example: HIKINGFAMILY"
-                  />
-                </div>
-                <div className="mb-2">
-                  <label className="block mb-2 font-bold text-gray-700">
-                    Minimum Claim Price
-                  </label>
-                  <input
-                    type="number"
-                    id="minimum_claim_price"
-                    name="minimum_claim_price"
-                    value={formData.minimum_claim_price}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded"
-                    placeholder="Example: 50000"
-                  />
-                </div>
-                <div className="mb-2">
-                  <label className="block mb-2 font-bold text-gray-700">
-                    Terms & Conditions
-                  </label>
-                  <textarea
-                    id="terms_condition"
-                    name="terms_condition"
-                    className="w-full p-2 border rounded"
-                    value={formData.terms_condition}
-                    onChange={handleChange}
-                    placeholder="Please give the terms and conditions"
-                  ></textarea>
-                </div>
-                <div className="mb-2">
-                  <label className="block mb-2 font-bold text-gray-700">
-                    Promo Discount Price
-                  </label>
-                  <input
-                    type="number"
-                    name="promo_discount_price"
-                    id="promo_discount_price"
-                    value={formData.promo_discount_price}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded"
-                    placeholder="Example: 50000"
-                  />
-                </div>
-                <div className="flex justify-between mt-6">
-                  <button
-                    type="button"
-                    onClick={handleSubmit}
-                    className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-700"
-                  >
-                    Create Promo
-                  </button>
-                  <button
-                    onClick={handleCancel}
-                    type="button"
-                    className="px-4 py-2 text-white bg-red-500 rounded"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      <Footer />
       </div>
+      <Footer />
     </div>
   );
 };

@@ -5,12 +5,15 @@ import { toast } from "react-toastify";
 import Footer from "@/components/Footer";
 import SideBar from "@/components/SideBar";
 import Bar from "@/components/dashboard/Bar";
+import { Paginator } from "primereact/paginator";
 
 const Category = () => {
-  const [categorys, setCategorys] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
+  const [first, setFirst] = useState(0); // For pagination
+  const [rows, setRows] = useState(6); // Items per page
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -29,12 +32,16 @@ const Category = () => {
           },
         }
       );
-      setCategorys(response.data.data);
-      console.log(response.data.data);
+      setCategories(response.data.data);
     } catch (error) {
       console.error(error.response);
+      toast.error("Failed to fetch categories.");
     }
   };
+
+  useEffect(() => {
+    getCategorys();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,18 +66,18 @@ const Category = () => {
         toast.success("Category created successfully");
         getCategorys();
         setIsModalOpen(false);
+        setImageUrl("");
       } else {
         toast.error("Failed to create category");
       }
     } catch (error) {
       console.error(error.response);
       toast.error("Failed to create category");
-    }setTimeout(() => {
-      getCategorys();
-    }, 2000);
+    }
   };
 
   const handleUpload = async () => {
+    if (!file) return;
     const uploadData = new FormData();
     uploadData.append("image", file);
 
@@ -89,7 +96,7 @@ const Category = () => {
         uploadData,
         config
       );
-      setImageUrl(res.data.url); // Simpan URL gambar
+      setImageUrl(res.data.url); 
       toast.success("Image uploaded successfully!");
     } catch (error) {
       toast.error("Failed to upload image!");
@@ -101,109 +108,126 @@ const Category = () => {
     setFile(e.target.files[0]);
   };
 
-  useEffect(() => {
-    getCategorys();
-  }, []);
-
-  const filteredcategorys = categorys.filter(
+  const filteredCategories = categories.filter(
     (category) =>
       category.name &&
       category.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const onPageChange = (event) => {
+    setFirst(event.first);
+    setRows(event.rows);
+  };
+
   return (
-    <div className="w-full h-full relative overflow-hidden flex flex-row items-start justify-start  pb-[29.4px] pr-[18px]  box-border gap-[12px] text-left text-xl text-indianred  mq450:h-auto ">
-      <SideBar  />
-      <div className=" flex flex-col justify-start gap-[32px] w-full pt-10 h-full ">
-        <Bar />
-        <div className="flex flex-row items-center justify-between flex-shrink-0 p-2 mx-6 border-b-2 border-l-2 border-solid rounded-2xl mq450:flex-col mq450:items-start mq450:ml-2">
-          <h1 className="text-3xl font-bold">Category</h1>
-          <button className="px-4 py-2 font-semibold text-black rounded-lg shadow-md bg-greenyellow hover:bg-yellowgreen-100 focus:outline-none">
-            <a className="no-underline" onClick={() => setIsModalOpen(true)}>
-              Create Category
-            </a>
-          </button>
-        </div>
-        <div className="flex flex-row items-center justify-between mx-6 mq450:flex-col mq450:items-start mq450:ml-2">
-          <input
-            type="text"
-            placeholder="Search Category"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="px-4 py-2 border rounded-lg focus:outline-none"
-          />
-        </div>
-        <div className="flex flex-wrap justify-center gap-6 mt-4 mb-28 mq450:gap-6">
-        {filteredcategorys.length > 0 ? (
-          filteredcategorys.map((item) => (
-            <CategoryCard
-              key={item.id}
-              item={item}
-              getCategorys={getCategorys}
-            />
-          ))
-        ) : (
-          <p className="text-center text-gray-700 col-span-full">
-            No categorys found
-          </p>
-        )}
-      </div>
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="relative w-full max-w-md p-6 bg-white rounded-lg">
+    <div className="w-full h-full">
+      <div className="w-full h-full relative overflow-hidden flex flex-row items-start justify-start pb-[29.4px] pr-[18px] box-border gap-[12px] text-left text-xl text-indianred mq450:h-auto">
+        <SideBar />
+        <div className="flex flex-col justify-start gap-[32px] w-full pt-10 h-full mb-28">
+          <Bar />
+          <div className="flex flex-row items-center justify-between flex-shrink-0 p-2 mx-6 border-b-2 border-l-2 border-solid rounded-2xl mq450:flex-col mq450:items-start mq450:ml-2">
+            <h1 className="text-3xl font-bold">Category</h1>
             <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute text-gray-600 top-2 right-2"
+              className="px-4 py-2 font-semibold text-black rounded-lg shadow-md bg-greenyellow hover:bg-yellowgreen-100 focus:outline-none"
+              onClick={() => setIsModalOpen(true)}
             >
-              &times;
+              Create Category
             </button>
-            <h2 className="mb-4 text-xl font-bold text-center">Add Category</h2>
-            {imageUrl && (
-              <img
-                src={imageUrl}
-                alt="Uploaded Category"
-                className="object-cover w-full h-48 mb-4 rounded"
-              />
-            )}
-            <form onSubmit={handleSubmit}>
-              <div className="gap-4 mb-4">
-                <label className="block text-gray-700">Choose Category</label>
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  className="w-full p-2 mt-2 border rounded "
-                />
-                <button
-                  type="button"
-                  onClick={handleUpload}
-                  className="px-4 py-2 mt-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
-                >
-                  Upload
-                </button>
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Category Name</label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full p-2 mt-2 border rounded"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"
-              >
-                Save
-              </button>
-            </form>
           </div>
+          <div className="flex flex-row items-center justify-between mx-6 mq450:flex-col mq450:items-start mq450:ml-2">
+            <input
+              type="text"
+              placeholder="Search Category"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="px-4 py-2 border rounded-lg focus:outline-none"
+            />
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 mt-4 mq450:gap-6">
+            {filteredCategories.length > 0 ? (
+              filteredCategories
+                .slice(first, first + rows)
+                .map((item) => (
+                  <CategoryCard
+                    key={item.id}
+                    item={item}
+                    getCategorys={getCategorys}
+                  />
+                ))
+            ) : (
+              <p className="text-center text-gray-700 col-span-full">
+                No categories found
+              </p>
+            )}
+          </div>
+          <Paginator
+            first={first}
+            rows={rows}
+            totalRecords={filteredCategories.length}
+            rowsPerPageOptions={[6]}
+            onPageChange={onPageChange}
+            className="paginator"
+          />
+          {isModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+              <div className="relative w-full max-w-md p-6 bg-white rounded-lg">
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="absolute text-gray-600 top-2 right-2"
+                >
+                  &times;
+                </button>
+                <h2 className="mb-4 text-xl font-bold text-center">
+                  Add Category
+                </h2>
+                {imageUrl && (
+                  <img
+                    src={imageUrl}
+                    alt="Uploaded Category"
+                    className="object-cover w-full h-48 mb-4 rounded"
+                  />
+                )}
+                <form onSubmit={handleSubmit}>
+                  <div className="gap-4 mb-4">
+                    <label className="block text-gray-700">
+                      Choose Category Image
+                    </label>
+                    <input
+                      type="file"
+                      onChange={handleFileChange}
+                      className="w-full p-2 mt-2 border rounded"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleUpload}
+                      className="px-4 py-2 mt-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+                    >
+                      Upload
+                    </button>
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-gray-700">Category Name</label>
+                    <input
+                      type="text"
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      className="w-full p-2 mt-2 border rounded"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"
+                  >
+                    Save
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
       <Footer />
-    </div>
     </div>
   );
 };

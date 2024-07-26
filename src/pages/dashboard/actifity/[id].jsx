@@ -164,236 +164,240 @@ const EditActivity = () => {
   };
 
   return (
-    <div className="w-full h-auto relative overflow-hidden flex flex-row items-start justify-start pt-0 pb-[29.4px] pr-[18px] pl-0 box-border gap-[12px]  text-left text-xl text-indianred font-body-2-regular mq800:pl-2 mq800:pr-6 mq800:box-border mq450:h-auto bg-white">
-      <SideBar />
-      <div className="flex flex-col items-start justify-start flex-1 ">
-        <div className="self-stretch flex flex-col justify-start gap-[12px] max-w-full pl-2 pt-12">
-          <Bar />
-          <div className="w-full max-w-4xl p-8 pb-40 mx-auto bg-white rounded-lg shadow-md">
-            <div className="w-full max-w-4xl p-8 ">
-              <h1 className="mb-6 text-2xl font-bold text-center">
-                Edit Activity
-              </h1>
-              <div className="mb-6">
-                {imageUrls.map((url, index) => (
-                  <div key={index} className="relative mb-4">
-                    <img
-                      src={url}
-                      alt={`Activity Image ${index + 1}`}
-                      className="object-cover w-full rounded shadow-md h-80"
-                    />
+    <div className="w-full h-full">
+      <div className="w-full h-auto relative overflow-hidden flex flex-row items-start justify-start pt-0 pb-[29.4px] pr-[18px] pl-0 box-border gap-[12px]  text-left text-xl text-indianred font-body-2-regular mq800:pl-2 mq800:pr-6 mq800:box-border mq450:h-auto bg-white">
+        <SideBar />
+        <div className="flex flex-col items-start justify-start flex-1 ">
+          <div className="self-stretch flex flex-col justify-start gap-[12px] max-w-full pl-2 pt-12">
+            <Bar />
+            <div className="w-full max-w-4xl p-8 mx-auto bg-white rounded-lg shadow-md">
+              <div className="w-full max-w-4xl p-8 ">
+                <h1 className="mb-6 text-2xl font-bold text-center">
+                  Edit Activity
+                </h1>
+                <div className="mb-6">
+                  {imageUrls.map((url, index) => (
+                    <div key={index} className="relative mb-4">
+                      <img
+                        src={url}
+                        alt={`Activity Image ${index + 1}`}
+                        className="object-cover w-full rounded shadow-md h-80"
+                      />
+                      <button
+                        onClick={() => handleImageDelete(url)}
+                        className="absolute p-1 text-white bg-red-500 rounded-full top-2 right-2"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <form className="space-y-4" onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-2 gap-4 mq450:grid-cols-1">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Title
+                      </label>
+                      <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Image Files
+                      </label>
+                      <input
+                        type="file"
+                        id="image"
+                        onChange={handleFileChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleUpload}
+                        className="inline-flex items-center px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-700"
+                      >
+                        Upload Image
+                      </button>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Category
+                      </label>
+                      <select
+                        id="categoryId"
+                        name="categoryId"
+                        value={formData.categoryId}
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      >
+                        <option value="">Select</option>
+                        {categories.map((category) => (
+                          <option key={category.id} value={category.id}>
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Description
+                      </label>
+                      <textarea
+                        id="description"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      ></textarea>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Price
+                      </label>
+                      <input
+                        type="number"
+                        name="price"
+                        value={formData.price}
+                        onChange={handleOnChange}
+                        id="price"
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Price Discount
+                      </label>
+                      <input
+                        type="text"
+                        name="price_discount"
+                        value={formData.price_discount}
+                        id="price-discount"
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Rating
+                      </label>
+                      <input
+                        type="text"
+                        id="rating"
+                        name="rating"
+                        value={formData.rating}
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Total Review
+                      </label>
+                      <input
+                        type="text"
+                        id="total-review"
+                        name="total_reviews"
+                        value={formData.total_reviews}
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Facilities
+                      </label>
+                      <input
+                        type="text"
+                        id="facilities"
+                        name="facilities"
+                        value={formData.facilities}
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Address
+                      </label>
+                      <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Province
+                      </label>
+                      <input
+                        type="text"
+                        id="province"
+                        name="province"
+                        value={formData.province}
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        City
+                      </label>
+                      <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Location Maps
+                      </label>
+                      <input
+                        type="text"
+                        id="location_maps"
+                        name="location_maps"
+                        value={formData.location_maps}
+                        onChange={handleOnChange}
+                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-between">
                     <button
-                      onClick={() => handleImageDelete(url)}
-                      className="absolute p-1 text-white bg-red-500 rounded-full top-2 right-2"
+                      type="submit"
+                      className="inline-flex items-center px-4 py-2 mt-4 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-700"
                     >
-                      &times;
+                      Update Activity
                     </button>
-                  </div>
-                ))}
-              </div>
-              <form className="space-y-4" onSubmit={handleSubmit}>
-                <div className="grid grid-cols-2 gap-4 mq450:grid-cols-1">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Title
-                    </label>
-                    <input
-                      type="text"
-                      id="title"
-                      name="title"
-                      value={formData.title}
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Image Files
-                    </label>
-                    <input
-                      type="file"
-                      id="image"
-                      onChange={handleFileChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
                     <button
                       type="button"
-                      onClick={handleUpload}
-                      className="inline-flex items-center px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-700"
+                      onClick={() =>
+                        router.push("/dashboard/actifity/Actifity")
+                      }
+                      className="items-center px-4 py-2 mt-4 text-sm font-medium text-white bg-red-700 rounded-md hover:bg-red-500"
                     >
-                      Upload Image
+                      Cancel
                     </button>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Category
-                    </label>
-                    <select
-                      id="categoryId"
-                      name="categoryId"
-                      value={formData.categoryId}
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    >
-                      <option value="">Select</option>
-                      {categories.map((category) => (
-                        <option key={category.id} value={category.id}>
-                          {category.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Description
-                    </label>
-                    <textarea
-                      id="description"
-                      name="description"
-                      value={formData.description}
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    ></textarea>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Price
-                    </label>
-                    <input
-                      type="number"
-                      name="price"
-                      value={formData.price}
-                      onChange={handleOnChange}
-                      id="price"
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Price Discount
-                    </label>
-                    <input
-                      type="text"
-                      name="price_discount"
-                      value={formData.price_discount}
-                      id="price-discount"
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Rating
-                    </label>
-                    <input
-                      type="text"
-                      id="rating"
-                      name="rating"
-                      value={formData.rating}
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Total Review
-                    </label>
-                    <input
-                      type="text"
-                      id="total-review"
-                      name="total_reviews"
-                      value={formData.total_reviews}
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Facilities
-                    </label>
-                    <input
-                      type="text"
-                      id="facilities"
-                      name="facilities"
-                      value={formData.facilities}
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Address
-                    </label>
-                    <input
-                      type="text"
-                      id="address"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Province
-                    </label>
-                    <input
-                      type="text"
-                      id="province"
-                      name="province"
-                      value={formData.province}
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      City
-                    </label>
-                    <input
-                      type="text"
-                      id="city"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Location Maps
-                    </label>
-                    <input
-                      type="text"
-                      id="location_maps"
-                      name="location_maps"
-                      value={formData.location_maps}
-                      onChange={handleOnChange}
-                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-between">
-                  <button
-                    type="submit"
-                    className="inline-flex items-center px-4 py-2 mt-4 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-700"
-                  >
-                    Update Activity
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => router.push("/dashboard/actifity/Actifity")}
-                    className="items-center px-4 py-2 mt-4 text-sm font-medium text-white bg-red-700 rounded-md hover:bg-red-500"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 };

@@ -131,22 +131,24 @@ const EditPromo = ({ item }) => {
     router.push("/dashboard/Promo");
   };
   return (
+    <div className="w-full h-full">
+      
     <div className="w-full h-auto relative overflow-hidden flex flex-row items-start justify-start pt-0 pb-[29.4px] pr-[18px] pl-0 box-border gap-[12px]  text-left text-xl text-indianred font-body-2-regular mq800:pl-2 mq800:pr-6 mq800:box-border mq450:h-auto bg-white">
       <SideBar />
       <div className="flex flex-col items-start justify-start flex-1 ">
         <div className="self-stretch flex flex-col justify-start gap-[12px] max-w-full pl-2 pt-12">
           <Bar />
-          <div className="w-full max-w-4xl p-8 pb-40 mx-auto bg-white rounded-lg shadow-md">
+          <div className="w-full max-w-4xl p-8 mx-auto bg-white rounded-lg shadow-md">
             <h1 className="mb-8 text-3xl font-bold text-center ">
               Edit Promo 
             </h1>
             {imageUrl && (
-            <img
+              <img
               src={imageUrl}
               alt="Uploaded Category"
               className="object-cover w-full h-64 mb-4 rounded"
-            />
-          )}
+              />
+            )}
             <div>
               <div className="grid grid-cols-2 gap-6 mq800:grid-cols-1">
                 <div className="pr-8 ">
@@ -161,7 +163,7 @@ const EditPromo = ({ item }) => {
                       name="title"
                       value={formData.title}
                       onChange={handleChange}
-                    ></input>
+                      ></input>
                   </div>
                   <div className="mb-6">
                     <label className="block mb-2 font-bold text-gray-700">
@@ -173,7 +175,7 @@ const EditPromo = ({ item }) => {
                       name="description"
                       value={formData.description}
                       onChange={handleChange}
-                    ></textarea>
+                      ></textarea>
                   </div>
                   <div className="mb-6">
                     <label className="block mb-2 font-bold text-gray-700">
@@ -186,7 +188,7 @@ const EditPromo = ({ item }) => {
                       name="promo_code"
                       value={formData.promo_code}
                       onChange={handleChange}
-                    ></input>
+                      ></input>
                   </div>
                   <div className="mb-6">
                     <label
@@ -202,7 +204,7 @@ const EditPromo = ({ item }) => {
                       name="minimum_claim_price"
                       value={formData.minimum_claim_price}
                       onChange={handleChange}
-                    ></input>
+                      ></input>
                   </div>
                   <div className="mb-6">
                     <label className="block mb-2 font-bold text-gray-700">
@@ -215,7 +217,7 @@ const EditPromo = ({ item }) => {
                       name="terms_conditions"
                       value={formData.terms_condition}
                       onChange={handleChange}
-                    ></input>
+                      ></input>
                   </div>
                   <div className="mb-6">
                     <label className="block mb-2 font-bold text-gray-700">
@@ -243,11 +245,11 @@ const EditPromo = ({ item }) => {
                       name="image"
                       onChange={handleFileChange}
                       value={formData.image}
-                    ></input>
+                      ></input>
                     <button
                       className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                       onClick={handleUpload}
-                    >
+                      >
                       Upload Image
                     </button>
                   </div>
@@ -257,22 +259,23 @@ const EditPromo = ({ item }) => {
                 <button
                   className="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700 focus:outline-none focus:shadow-outline"
                   onClick={handleSubmit}
-                >
+                  >
                   Update Promo
                 </button>
                 <button
                   className="px-4 py-2 font-bold text-white bg-red-500 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline"
                   onClick={handleCancel}
-                >
+                  >
                   Cancel
                 </button>
               </div>
             </div>
           </div>
           </div>
-          <Footer/>
         </div>
       </div>
+          <Footer/>
+                  </div>
   );
 };
 

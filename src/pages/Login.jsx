@@ -73,7 +73,7 @@ const Login = () => {
             </div>
             <div className="w-[124px] relative text-base inline-block shrink-0 z-[1] text-gray-200">
               <p className="m-0">No Account ?</p>
-              <p className="m-0 text-yellowgreen">Sign up</p>
+              <a href="/Register" className="m-0 no-underline text-yellowgreen-200">Sign up</a>
             </div>
           </div>
           <div className="w-[451px] flex flex-col items-start justify-start gap-[38px] max-w-full mq450:gap-[19px]">
