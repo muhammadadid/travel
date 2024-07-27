@@ -3,7 +3,7 @@ import axios from "axios";
 import ActifityCard from "@/components/dashboard/ActifityCard";
 import Footer from "@/components/Footer";
 import SideBar from "@/components/SideBar";
-import SortDropdown from "@/components/SortDropdown";
+import SortDropdown from "../../../components/SortDropdown";
 import Bar from "@/components/dashboard/Bar";
 import { Paginator } from "primereact/paginator";
 
