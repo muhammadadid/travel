@@ -20,7 +20,7 @@ const FormPromo = ({ promo }) => {
         src={promo?.imageUrl}
       />
 
-      <div className="h-64 self-stretch rounded-t-none rounded-b-7xl  flex flex-col items-start justify-start py-10 pr-0 pl-6 box-border gap-[22px] max-w-full bg-darkslateblue">
+      <div className="h-80 self-stretch rounded-t-none rounded-b-7xl  flex flex-col items-start justify-start py-10 pr-0 pl-6 box-border gap-[22px] w-full bg-darkslateblue ">
         <div className="w-[449px] flex flex-col items-start justify-start gap-[8px] max-w-[109%] shrink-0 font-mulish">
           <h3 className="relative self-stretch m-0 font-normal text-white text-19xl mq450:text-3xl">
             {promo?.title}

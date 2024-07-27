@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import { useRouter } from "next/router";
 import moment from "moment";
 import Footer from "@/components/Footer";
+import withAuth from "@/components/withAuth";
 
 const PromoDetail = () => {
   const [promo, setPromo] = useState({});
@@ -130,4 +131,4 @@ const PromoDetail = () => {
     </div>
   );
 };
-export default PromoDetail;
+export default withAuth(PromoDetail);

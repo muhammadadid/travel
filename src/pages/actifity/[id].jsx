@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import withAuth from "@/components/withAuth";
 
 const actifityDetail = () => {
   const [actifity, setActifity] = useState([]);
@@ -113,4 +114,4 @@ const actifityDetail = () => {
   );
 };
 
-export default actifityDetail;
+export default withAuth(actifityDetail);
