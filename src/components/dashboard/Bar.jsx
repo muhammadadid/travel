@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserDetails } from '../../pages/Redux/slice/authSlice'; // Adjust the path to where your authSlice is located
+import { fetchUserDetails } from '../../Redux/slice/authSlice'; // Adjust the path to where your authSlice is located
 
 const Bar = () => {
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setToken, fetchUserDetails } from "../pages/Redux/slice/authSlice";
+import { setToken, fetchUserDetails } from "../Redux/slice/authSlice";
 import { toast } from "react-toastify";
 
 const Navbar = () => {

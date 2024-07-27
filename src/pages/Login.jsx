@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { loginUser, fetchUserDetails } from "../pages/Redux/slice/authSlice";
+import { loginUser, fetchUserDetails } from "../Redux/slice/authSlice";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
