@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import SortDropdown from '../components/SortDropdown';
+import SortDropdown from '@/components/SortDropdown';
 import CardActifity from '@/components/CardActifity';
 
 export default function Actifity() {
