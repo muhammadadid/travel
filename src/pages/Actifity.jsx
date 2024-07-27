@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import SortDropdown from '@/components/SortDropdown';
 import CardActifity from '@/components/CardActifity';
+import SortDropdown from '@/components/SortDropdown';
 
 export default function Actifity() {
   const [activities, setActivities] = useState([]);
@@ -71,7 +71,7 @@ export default function Actifity() {
             <section className="box-border flex flex-row items-start self-stretch justify-center max-w-full px-5 py-0 text-5xl font-body-14px-medium">
               <div className="w-[1400px] flex flex-col items-center justify-center max-w-full text-32xl mb-10 ">
                 <div className="self-stretch flex flex-row items-center justify-Start gap-[20px] mq450:flex-wrap pl-28">
-                  <SortDropdown onSortChange={handleSortChange} />
+                <SortDropdown onSortChange={handleSortChange} />
                 </div>
                 <div className="flex-1 flex flex-col items-start justify-start gap-[100px] max-w-full mq800:gap-[50px] mq450:gap-[25px]">
                   <div className="flex flex-col items-start justify-start gap-[15px] max-w-full">

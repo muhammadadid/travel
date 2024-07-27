@@ -3,9 +3,9 @@ import axios from "axios";
 import ActifityCard from "@/components/dashboard/ActifityCard";
 import Footer from "@/components/Footer";
 import SideBar from "@/components/SideBar";
-import SortDropdown from "@/components/SortDropdown";
 import Bar from "@/components/dashboard/Bar";
 import { Paginator } from "primereact/paginator";
+import SortDropdown from "@/components/SortDropdown";
 
 const Actifity = () => {
   const [actifity, setActifity] = useState([]);
@@ -69,7 +69,7 @@ const Actifity = () => {
             </button>
           </div>
           <div className="flex flex-row items-center justify-between mx-6 mq450:flex-col mq450:items-start mq450:ml-2">
-            <SortDropdown onSortChange={handleSortChange} />
+          <SortDropdown  onSortChange={handleSortChange} />  
           </div>
           <div className="flex flex-wrap justify-center gap-6 mt-4 mq450:gap-6">
             {actifity.slice(first, first + rows).map((item) => (
