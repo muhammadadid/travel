@@ -13,7 +13,7 @@ const SortDropdown = ({ onSortChange }) => {
           "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/categories",
           {
             headers: {
-              apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
+              apiKey: process.env.NEXT_PUBLIC_API_KEY,
             },
           }
         );
